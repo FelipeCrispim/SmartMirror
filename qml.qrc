@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Page1.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>BackgroundSwirls.qml</file>
+        <file>particle.png</file>
+        <file>Swirl.qml</file>
+        <file>logo.png</file>
+    </qresource>
+</RCC>
