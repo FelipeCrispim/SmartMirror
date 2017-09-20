@@ -48,22 +48,22 @@ ShaderEffect {
     width: 400
     height: 300
 
-    property real speed: 1000
+    property real speed: 5000 //(Math.random() * 30 + 30) * 1000 /speed
 
     property color d: Qt.rgba(Math.random() * 0.7,
                               Math.random() * 0.5,
                               Math.random() * 0.7,
                               Math.random() * 0.5)
     property real tx
-    NumberAnimation on tx { from: 0; to: Math.PI * 2; duration: (Math.random() * 30 + 30) * 1000 / speed; loops: Animation.Infinite }
+    NumberAnimation on tx { from: 0; to: Math.PI * 2; duration: 12000; loops: Animation.Infinite }
     property real ty
-    NumberAnimation on ty { from: 0; to: Math.PI * 2; duration: (Math.random() * 30 + 30) * 1000 / speed; loops: Animation.Infinite }
+    NumberAnimation on ty { from: 0; to: Math.PI * 2; duration: 12000; loops: Animation.Infinite }
     property real tz
-    NumberAnimation on tz { from: 0; to: Math.PI * 2; duration: (Math.random() * 30 + 30) * 1000 / speed; loops: Animation.Infinite }
+    NumberAnimation on tz { from: 0; to: Math.PI * 2; duration: 12000; loops: Animation.Infinite }
     property real tw
-    NumberAnimation on tw { from: 0; to: Math.PI * 2; duration: (Math.random() * 30 + 30) * 1000 / speed; loops: Animation.Infinite }
+    NumberAnimation on tw { from: 0; to: Math.PI * 2; duration: 12000; loops: Animation.Infinite }
 
-    property real amplitude: height / 2
+    property real amplitude: height/2
 
     property variant colorTable: ShaderEffectSource { sourceItem: Rectangle { width: 4; height: 4; color: "steelblue" } }
 
