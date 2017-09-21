@@ -1,11 +1,17 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
-Rectangle {
+BackgroundSwirls {
     id: rect
-    width: 100; height: 100
-    anchors.fill: parent
-
+    //    width: 100; height: 100
+    //    anchors.fill: parent
+    Image {
+        source: "qrc:/logo.png"
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        height: 50
+        width: 50
+    }
     SwipeView {
         id: swipeView
         anchors.fill: parent
@@ -15,8 +21,7 @@ Rectangle {
         //            onTriggered: swipeView.currentIndex += 1
         //        }
 
-        Page {
-            BackgroundSwirls { }
+        Item {
             Column {
                 anchors.centerIn: parent
                 spacing: 15
@@ -40,20 +45,39 @@ Rectangle {
                 Button {
                     text: "Conectar"
                     anchors.horizontalCenter: parent.horizontalCenter
-                    onClicked: rect.destroy();//swipeView.currentIndex += 1
+                    onClicked: {
+                        stackView.pop();
+                        //swipeView.currentIndex += 1
+                    }
                 }
             }
         }
-        Page {
-            Image {
-                id: logo
-                source: "qrc:/logo.png"
+        Item {
+            Column {
                 anchors.centerIn: parent
-                height: 250
-                width: 250
-                //                Component.onCompleted: bouncebehavior.start()
+                spacing: 15
+                Label {
+                    text: "Configure sua rede social"
+                    font.weight: Font.Bold
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
 
-                //                NumberAnimation on x { to: 50; duration: 1000 }
+                TextField {
+                    placeholderText: qsTr("Rede")
+                    width: root.width/2
+                }
+                TextField {
+                    placeholderText: qsTr("Senha da rede")
+                    width: root.width/2
+                }
+                Button {
+                    text: "Entrar"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    onClicked: {
+                        stackView.pop();
+                        //swipeView.currentIndex += 1
+                    }
+                }
             }
         }
     }

@@ -8,12 +8,20 @@ ApplicationWindow {
     width: 640
     height: 480
     title: qsTr("Hello World")
-    Rectangle {
-        anchors.fill: parent
-        Component.onCompleted: {
-            var component = Qt.createComponent("Introduction.qml");
-            component.createObject(root);
-        }
+    StackView {
+        id: stackView
 
+        focus: true
+        anchors.fill: parent
+
+        initialItem: Item {
+            id: topItem
+            Label {
+                text: "Tela principal"
+                anchors.centerIn: parent
+            }
+        }
+        Component.onCompleted: stackView.push(Qt.resolvedUrl("Introduction.qml"))
     }
+
 }

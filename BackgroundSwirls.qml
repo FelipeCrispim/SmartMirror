@@ -44,7 +44,7 @@ import QtQuick 2.0
 import QtQuick.Particles 2.0
 
 Item {
-    anchors.fill: parent
+//    anchors.fill: parent
 
 //    Rectangle {
 //        anchors.fill: parent
@@ -58,7 +58,7 @@ Item {
         id: colorTableItem
         width: 16
         height: 16
-        anchors.fill: parent
+//        anchors.fill: parent
 
         property color color1: Qt.rgba(0.8, 0.8, 1, 0.3)
         property color color2: Qt.rgba(0.8, 0.8, 1, 0.3)
