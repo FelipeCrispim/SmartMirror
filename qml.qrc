@@ -8,5 +8,7 @@
         <file>Swirl.qml</file>
         <file>logo.png</file>
         <file>Introduction.qml</file>
+        <file>13-Partly-Cloudy-icon.png</file>
+        <file>giphy.gif</file>
     </qresource>
 </RCC>
