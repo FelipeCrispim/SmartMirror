@@ -29,8 +29,6 @@ ApplicationWindow {
 
                 Label {
                     id: clock
-                    //                    width: 100
-                    //                    anchors.fill: parent
                     property int hours
                     property int minutes
                     property int seconds

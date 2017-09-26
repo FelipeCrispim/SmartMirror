@@ -13,21 +13,21 @@ BackgroundSwirls {
         height: 50
         width: 50
     }
-//    RowLayout {
-//        //                    anchors.fill: parent
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        anchors.top: parent.top
-//        //        anchors.bottomMargin: 35
-//        spacing: 20
-//        Repeater {
-//            model: 3
-//            Rectangle {
-//                height: 10
-//                width: 10
-//                radius: height/2
-//            }
-//        }
-//    }
+    //    RowLayout {
+    //        //                    anchors.fill: parent
+    //        anchors.horizontalCenter: parent.horizontalCenter
+    //        anchors.top: parent.top
+    //        //        anchors.bottomMargin: 35
+    //        spacing: 20
+    //        Repeater {
+    //            model: 3
+    //            Rectangle {
+    //                height: 10
+    //                width: 10
+    //                radius: height/2
+    //            }
+    //        }
+    //    }
     SwipeView {
         id: swipeView
         anchors.fill: parent
@@ -37,6 +37,28 @@ BackgroundSwirls {
         //            onTriggered: swipeView.currentIndex += 1
         //        }
         Item {
+            id: login
+            property var password: new Array
+            SequentialAnimation {
+                id: animation
+                NumberAnimation { target: login; property: "x"; to: 20; duration: 300 }
+                NumberAnimation { target: login; property: "x"; to: -20; duration: 200 }
+                NumberAnimation { target: login; property: "x"; to: 0; duration: 300 }
+                onStopped: {
+                    login.password[0].highlighted = false
+                    login.password[1].highlighted = false
+                    login.password[2].highlighted = false
+                    login.password = []
+                    login.enabled = true
+                }
+            }
+            function analysePassword(){
+                login.enabled = false
+                if(login.password[0].text === "1" && login.password[1].text === "2" && login.password[2].text === "3")
+                    stackView.pop();
+                else
+                    animation.running = true
+            }
 
             GridView {
                 id: gridButton
@@ -45,6 +67,7 @@ BackgroundSwirls {
                 width: 300
                 anchors.centerIn: parent
                 cellWidth: 100; cellHeight: 100
+                interactive: false
 
                 delegate:  Button {
                     id: digitButton
@@ -55,10 +78,13 @@ BackgroundSwirls {
                     onClicked: {
                         if (digitButton.highlighted == false) {
                             digitButton.highlighted = true
-                            backgroundButton.color = Qt.rgba(0.9,0.9,0.9,0.6)
+                            login.password.push(digitButton)
+                            if(login.password.length == 3) {
+                                login.analysePassword()
+                            }
                         } else {
+                            login.password.pop()
                             digitButton.highlighted = false
-                            backgroundButton.color = Qt.rgba(0.1,0.1,0.1,0.85)
                         }
 
                     }
@@ -66,7 +92,7 @@ BackgroundSwirls {
                     background: Rectangle {
                         id: backgroundButton
 
-                        color: Qt.rgba(0.1,0.1,0.1,0.85)
+                        color: digitButton.highlighted? Qt.rgba(0.9,0.9,0.9,0.6) : Qt.rgba(0.1,0.1,0.1,0.85)
                         radius: height/2
                         border.width: 2
                         border.color: "white"
