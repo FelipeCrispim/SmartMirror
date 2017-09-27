@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
+import QtPositioning 5.8
 
 ApplicationWindow {
     id: root
@@ -8,9 +9,32 @@ ApplicationWindow {
     width: 800
     height: 480
     title: qsTr("Hello World")
+
+    PositionSource {
+        id: coord
+    }
+    //    Component.onCompleted: getData()
+    //http://api.wunderground.com/api/a43e3da295483298/conditions/q/-9,-35.7224.json
+    function getData() {
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://api.wunderground.com/api/a43e3da295483298/conditions/q/-9,-35.7224.json";
+
+        xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status == 200) {
+                myFunction(xmlhttp.responseText);
+            }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+    }
+
+    function myFunction(response) {
+        //        console.log(JSON.parse(response).current_observation.temp_c);
+        tempLbl.text = JSON.parse(response).current_observation.temp_c + "º"
+        tempIcon.source = JSON.parse(response).current_observation.icon_url
+    }
     StackView {
         id: stackView
-
         focus: true
         anchors.fill: parent
 
@@ -98,15 +122,17 @@ ApplicationWindow {
                     spacing: 10
                     //                    Layout.alignment: Qt.AlignRight
                     Item {
-                        width: 75
+                        width: 54
                         height: 54
                         AnimatedImage {
-                            source: "qrc:/giphy.gif"
+                            id: tempIcon
+                            source: "http://icons.wxug.com/i/c/k/nt_rain.gif"
                             anchors.fill: parent
                             width: 20
                         }
                     }
                     Label {
+                        id: tempLbl
                         text: "15º"
                         font.pixelSize: 38
                         //                        verticalAlignment: parent.verticalCenter
@@ -115,7 +141,7 @@ ApplicationWindow {
                 }
             }
         }
-        Component.onCompleted: stackView.push(Qt.resolvedUrl("Introduction.qml"))
+        //        Component.onCompleted: stackView.push(Qt.resolvedUrl("Introduction.qml"))
     }
 
 }

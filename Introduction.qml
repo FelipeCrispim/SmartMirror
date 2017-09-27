@@ -6,6 +6,7 @@ BackgroundSwirls {
     id: rect
     //    width: 100; height: 100
     //    anchors.fill: parent
+
     Image {
         source: "qrc:/logo.png"
         anchors.right: parent.right
