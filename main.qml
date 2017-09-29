@@ -1,7 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
-import QtPositioning 5.8
+import QtPositioning 5.3
 
 ApplicationWindow {
     id: root
@@ -13,7 +13,7 @@ ApplicationWindow {
     PositionSource {
         id: coord
     }
-    //    Component.onCompleted: getData()
+//        Component.onCompleted: getData()
     //http://api.wunderground.com/api/a43e3da295483298/conditions/q/-9,-35.7224.json
     function getData() {
         var xmlhttp = new XMLHttpRequest();
@@ -29,7 +29,7 @@ ApplicationWindow {
     }
 
     function myFunction(response) {
-        //        console.log(JSON.parse(response).current_observation.temp_c);
+//        console.log("teste", JSON.parse(response).current_observation.temp_c);
         tempLbl.text = JSON.parse(response).current_observation.temp_c + "º"
         tempIcon.source = JSON.parse(response).current_observation.icon_url
     }
@@ -47,7 +47,7 @@ ApplicationWindow {
                 anchors.margins: 15
                 width: root.width/2
                 Label {
-                    text: "Sexta, 21"
+                    text: "Sexta, 28"
                     font.pixelSize: 32
                 }
 
@@ -67,17 +67,13 @@ ApplicationWindow {
                         onTriggered: clock.timeChanged()
                     }
                     text: {
-                        if ((clock.seconds % 2) == 0)
+                        if ((clock.seconds & 1) == 0)
                             hours+":"+minutes
                         else
                             hours+" "+minutes
                     }
                     font.pixelSize: 60
                     font.bold: true
-                    Component.onCompleted: {
-                        if ((clock.seconds % 2) == 0)
-                            clock.text[2] = ' ';
-                    }
                 }
                 Label {
                     property string goal1: "Caminhar para o trabalho"
@@ -141,7 +137,7 @@ ApplicationWindow {
                 }
             }
         }
-        //        Component.onCompleted: stackView.push(Qt.resolvedUrl("Introduction.qml"))
+                Component.onCompleted: stackView.push(Qt.resolvedUrl("Introduction.qml"))
     }
 
 }

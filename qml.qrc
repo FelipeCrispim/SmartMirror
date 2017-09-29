@@ -10,5 +10,6 @@
         <file>Introduction.qml</file>
         <file>13-Partly-Cloudy-icon.png</file>
         <file>giphy.gif</file>
+        <file>ballon.png</file>
     </qresource>
 </RCC>

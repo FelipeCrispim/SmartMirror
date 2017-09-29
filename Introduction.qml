@@ -1,19 +1,54 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.1
 
-BackgroundSwirls {
+Item {
     id: rect
     //    width: 100; height: 100
     //    anchors.fill: parent
 
+
+    Item {
+//        anchors.right: parent.right
+//        anchors.bottom: parent.bottom
+//        anchors.leftMargin: 250
+//        anchors.margins: 50
+        anchors.bottom: logo.top
+        anchors.right: parent.right
+        anchors.rightMargin: 200
+        anchors.bottomMargin: 150
+
+        Label {
+            topPadding: 35
+            leftPadding: 27
+            font: Qt.font({ family: "Serif", weight: Font.Bold })
+            text: {
+                if(swipeView.currentIndex == 0)
+                    "Defina uma senha\nde 3 dígitos para\nseu SmartMirror."
+                else if(swipeView.currentIndex == 1)
+                    "Agora precisamos\nque você nos conec-\nte ao seu wifi."
+                else
+                    "Para terminar,\nconfigure sua rede\nsocial preferida."
+            }
+        }
+        Image {
+            source: "qrc:/ballon.png"
+            height: 172
+            width: 200
+            rotation: -20
+        }
+    }
     Image {
+        id: logo
         source: "qrc:/logo.png"
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         height: 50
         width: 50
     }
+
+
     //    RowLayout {
     //        //                    anchors.fill: parent
     //        anchors.horizontalCenter: parent.horizontalCenter
@@ -42,9 +77,9 @@ BackgroundSwirls {
             property var password: new Array
             SequentialAnimation {
                 id: animation
-                NumberAnimation { target: login; property: "x"; to: 20; duration: 300 }
-                NumberAnimation { target: login; property: "x"; to: -20; duration: 200 }
-                NumberAnimation { target: login; property: "x"; to: 0; duration: 300 }
+                NumberAnimation { target: login; property: "x"; to: 20; duration: 200 }
+                NumberAnimation { target: login; property: "x"; to: -20; duration: 100 }
+                NumberAnimation { target: login; property: "x"; to: 0; duration: 200 }
                 onStopped: {
                     login.password[0].highlighted = false
                     login.password[1].highlighted = false
@@ -56,7 +91,8 @@ BackgroundSwirls {
             function analysePassword(){
                 login.enabled = false
                 if(login.password[0].text === "1" && login.password[1].text === "2" && login.password[2].text === "3")
-                    stackView.pop();
+//                    stackView.pop();
+                    swipeView.currentIndex += 1
                 else
                     animation.running = true
             }
@@ -82,6 +118,7 @@ BackgroundSwirls {
                             login.password.push(digitButton)
                             if(login.password.length == 3) {
                                 login.analysePassword()
+
                             }
                         } else {
                             login.password.pop()
