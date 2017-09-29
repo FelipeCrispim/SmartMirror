@@ -13,7 +13,7 @@ ApplicationWindow {
     PositionSource {
         id: coord
     }
-//        Component.onCompleted: getData()
+    Component.onCompleted: getData()
     //http://api.wunderground.com/api/a43e3da295483298/conditions/q/-9,-35.7224.json
     function getData() {
         var xmlhttp = new XMLHttpRequest();
