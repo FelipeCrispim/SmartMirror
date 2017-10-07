@@ -1,9 +1,10 @@
-QT += qml quick network positioning
+QT += qml quick network bluetooth positioning
 
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    networkmanager.cpp
+    networkmanager.cpp \
+    bluetoothmanager.cpp
 
 RESOURCES += qml.qrc
 
@@ -30,4 +31,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    networkmanager.h
+    networkmanager.h \
+    bluetoothmanager.h

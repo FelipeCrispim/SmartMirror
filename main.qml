@@ -13,7 +13,7 @@ ApplicationWindow {
     PositionSource {
         id: coord
     }
-    Component.onCompleted: getData()
+    //    Component.onCompleted: getData()
     //http://api.wunderground.com/api/a43e3da295483298/conditions/q/-9,-35.7224.json
     function getData() {
         var xmlhttp = new XMLHttpRequest();
@@ -29,7 +29,7 @@ ApplicationWindow {
     }
 
     function myFunction(response) {
-//        console.log("teste", JSON.parse(response).current_observation.temp_c);
+        //        console.log("teste", JSON.parse(response).current_observation.temp_c);
         tempLbl.text = JSON.parse(response).current_observation.temp_c + "º"
         tempIcon.source = JSON.parse(response).current_observation.icon_url
     }
@@ -51,7 +51,7 @@ ApplicationWindow {
                     font.pixelSize: 32
                 }
 
-                Label {
+                Row {
                     id: clock
                     property int hours
                     property int minutes
@@ -66,14 +66,22 @@ ApplicationWindow {
                         interval: 1000; running: true; repeat: true;
                         onTriggered: clock.timeChanged()
                     }
-                    text: {
-                        if ((clock.seconds & 1) == 0)
-                            hours+":"+minutes
-                        else
-                            hours+" "+minutes
+                    Label {
+                        text: clock.hours
+                        font.pixelSize: 60
+                        font.bold: true
                     }
-                    font.pixelSize: 60
-                    font.bold: true
+                    Label {
+                        text: ":"
+                        font.pixelSize: 60
+                        font.bold: true
+                        color: (clock.seconds & 1) == 0? "transparent" : "white"
+                    }
+                    Label {
+                        text: clock.minutes
+                        font.pixelSize: 60
+                        font.bold: true
+                    }
                 }
                 Label {
                     property string goal1: "Caminhar para o trabalho"
@@ -137,7 +145,38 @@ ApplicationWindow {
                 }
             }
         }
-                Component.onCompleted: stackView.push(Qt.resolvedUrl("Introduction.qml"))
+        //                Component.onCompleted: stackView.push(Qt.resolvedUrl("Introduction.qml"))
     }
-
+    Rectangle {
+        id: blockScreen
+        property string device: bluetoothManager.deviceBluetooth
+        anchors.fill: parent
+        color: "black"
+        opacity: 1
+        onDeviceChanged: {
+            if(device == "00:A0:C6:A1:7B:C9"){
+                welcomeLabel.visible = true
+                animator.from = 1
+                animator.to = 0
+                animator.running = true
+            } else if (blockScreen.opacity == 0){
+                animator.from = 0
+                animator.to = 1
+                animator.running = true
+            }
+        }
+        OpacityAnimator {
+            id: animator
+            target: blockScreen;
+            duration: 2500
+            onStopped: welcomeLabel.visible = false
+        }
+        Label {
+            id: welcomeLabel
+            text: "Bem vindo Fulano!"
+            anchors.centerIn: parent
+            font.pixelSize: 38
+            visible: false
+        }
+    }
 }
