@@ -30,11 +30,14 @@ private:
 signals:
     void deviceBluetoothChanged();
 
-private slots:
+public slots:
     void deviceDiscovered(const QBluetoothDeviceInfo &serviceInfo);
     void discoveryFinished();
     void deviceConnected();
     void deviceDisconnected();
+    void update();
+    void scanCanceled();
+
 };
 
 #endif // BLUETOOTHMANAGER_H

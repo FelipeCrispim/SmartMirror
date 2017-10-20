@@ -149,25 +149,30 @@ ApplicationWindow {
     }
     Rectangle {
         id: blockScreen
+        property bool blackScreen: true
         property string device: bluetoothManager.deviceBluetooth
         anchors.fill: parent
         color: "black"
         opacity: 1
         onDeviceChanged: {
-            if(device == "00:A0:C6:A1:7B:C9"){
+            console.log("mudou no qml")
+            if(device == "00:A0:C6:24:16:30" && blackScreen == true){
                 welcomeLabel.visible = true
                 animator.from = 1
                 animator.to = 0
                 animator.running = true
-            } else if (blockScreen.opacity == 0){
+                blackScreen = false
+            } else if (device == "notFound" && blackScreen == false){
                 animator.from = 0
                 animator.to = 1
                 animator.running = true
+                blackScreen = true
             }
         }
         OpacityAnimator {
             id: animator
             target: blockScreen;
+            running: false
             duration: 2500
             onStopped: welcomeLabel.visible = false
         }
