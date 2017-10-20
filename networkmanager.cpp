@@ -1,5 +1,6 @@
 #include "networkmanager.h"
 #include <QNetworkInterface>
+#include <QNetworkSession>
 #include <QDebug>
 
 NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
@@ -37,4 +38,12 @@ void NetworkManager::setComboList(const QStringList &comboList)
 QStringList NetworkManager::comboList() const
 {
     return m_comboList;
+}
+
+bool NetworkManager::isOnline()
+{
+    QNetworkConfigurationManager mgr;
+    QNetworkConfiguration ap = mgr.defaultConfiguration();
+    QNetworkSession *session = new QNetworkSession(ap);
+//    qDebug() << session->is;
 }

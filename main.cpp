@@ -18,6 +18,6 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("bluetoothManager", &bluetooth);
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 
-
+    wifi.isOnline();
     return app.exec();
 }

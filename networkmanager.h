@@ -15,6 +15,7 @@ public:
 
     void setComboList(const QStringList &a);
     QStringList comboList() const ;
+    bool isOnline();
 private:
     QNetworkConfigurationManager nwkMgr;
     QStringList m_comboList;

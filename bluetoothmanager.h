@@ -5,6 +5,8 @@
 #include <qbluetoothuuid.h>
 #include <qbluetoothdeviceinfo.h>
 #include <qbluetoothdevicediscoveryagent.h>
+#include <qbluetoothlocaldevice.h>
+#include <QLowEnergyController>
 
 class BluetoothManager : public QObject
 {
@@ -13,14 +15,17 @@ class BluetoothManager : public QObject
 
 public:
     explicit BluetoothManager(QObject *parent = 0);
+    ~BluetoothManager();
     void startDiscovery();
     void stopDiscovery();
     QString deviceBluetooth() const;
 
+    void connectDevice(const QBluetoothDeviceInfo device);
 private:
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent;
     QString m_device;
-//    QMap<QListWidgetItem *, QBluetoothServiceInfo> m_discoveredServices;
+    QBluetoothLocalDevice localDevice;
+    QLowEnergyController *m_controller;
 
 signals:
     void deviceBluetoothChanged();
@@ -28,6 +33,8 @@ signals:
 private slots:
     void deviceDiscovered(const QBluetoothDeviceInfo &serviceInfo);
     void discoveryFinished();
+    void deviceConnected();
+    void deviceDisconnected();
 };
 
 #endif // BLUETOOTHMANAGER_H
