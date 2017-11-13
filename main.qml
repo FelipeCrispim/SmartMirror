@@ -9,7 +9,11 @@ ApplicationWindow {
     width: 800
     height: 480
     title: qsTr("Hello World")
-
+    property int dayInWeek: 7
+    property int date: 0
+    property int hours: 0
+    property int minutes: 0
+    property int seconds: 0
     PositionSource {
         id: coord
     }
@@ -26,6 +30,20 @@ ApplicationWindow {
         }
         xmlhttp.open("GET", url, true);
         xmlhttp.send();
+    }
+
+    Timer {
+        interval: 1000; running: true; repeat: true;
+        onTriggered: root.timeChanged()
+    }
+    Component.onCompleted: root.timeChanged()
+    function timeChanged() {
+        var date = new Date;
+        root.date = date.getDate() //1 to 31
+        root.dayInWeek =  date.getDay() //0 to 6
+        root.hours = date.getHours() //0 to 23
+        root.minutes = date.getMinutes()
+        root.seconds = date.getUTCSeconds();
     }
 
     function myFunction(response) {
@@ -47,27 +65,15 @@ ApplicationWindow {
                 anchors.margins: 15
                 width: root.width/2
                 Label {
-                    text: "Sexta, 28"
+                    property var days: ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado",""]
+                    text: days[root.dayInWeek]+", "+root.date
                     font.pixelSize: 32
                 }
 
                 Row {
                     id: clock
-                    property int hours
-                    property int minutes
-                    property int seconds
-                    function timeChanged() {
-                        var date = new Date;
-                        hours = date.getHours()
-                        minutes = date.getMinutes()
-                        seconds = date.getUTCSeconds();
-                    }
-                    Timer {
-                        interval: 1000; running: true; repeat: true;
-                        onTriggered: clock.timeChanged()
-                    }
                     Label {
-                        text: clock.hours
+                        text: root.hours
                         font.pixelSize: 60
                         font.bold: true
                     }
@@ -75,10 +81,10 @@ ApplicationWindow {
                         text: ":"
                         font.pixelSize: 60
                         font.bold: true
-                        color: (clock.seconds & 1) == 0? "transparent" : "white"
+                        color: (root.seconds & 1) == 0? "transparent" : "white"
                     }
                     Label {
-                        text: clock.minutes
+                        text: root.minutes
                         font.pixelSize: 60
                         font.bold: true
                     }
@@ -145,7 +151,7 @@ ApplicationWindow {
                 }
             }
         }
-        //                Component.onCompleted: stackView.push(Qt.resolvedUrl("Introduction.qml"))
+//        Component.onCompleted: stackView.push(Qt.resolvedUrl("Introduction.qml"))
     }
     Rectangle {
         id: blockScreen
@@ -154,8 +160,8 @@ ApplicationWindow {
         anchors.fill: parent
         color: "black"
         opacity: 1
+        visible: false
         onDeviceChanged: {
-            console.log("mudou no qml")
             if(device == "00:A0:C6:24:16:30" && blackScreen == true){
                 welcomeLabel.visible = true
                 animator.from = 1
@@ -178,7 +184,12 @@ ApplicationWindow {
         }
         Label {
             id: welcomeLabel
-            text: "Bem vindo Fulano!"
+            Component.onCompleted: console.log(welcomeLabel.text)
+            text: {
+                if(root.hours < 12) return "Bom dia!"
+                else if(root.hours>=12 && root.hours <18) return "Boa tarde!"
+                else return "Boa noite!"
+            }
             anchors.centerIn: parent
             font.pixelSize: 38
             visible: false

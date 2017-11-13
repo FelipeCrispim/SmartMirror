@@ -9,36 +9,36 @@ Item {
     //    anchors.fill: parent
 
 
-    Item {
+//    Item {
+////        anchors.right: parent.right
+////        anchors.bottom: parent.bottom
+////        anchors.leftMargin: 250
+////        anchors.margins: 50
+//        anchors.bottom: logo.top
 //        anchors.right: parent.right
-//        anchors.bottom: parent.bottom
-//        anchors.leftMargin: 250
-//        anchors.margins: 50
-        anchors.bottom: logo.top
-        anchors.right: parent.right
-        anchors.rightMargin: 200
-        anchors.bottomMargin: 150
+//        anchors.rightMargin: 200
+//        anchors.bottomMargin: 150
 
-        Label {
-            topPadding: 35
-            leftPadding: 27
-            font: Qt.font({ family: "Serif", weight: Font.Bold })
-            text: {
-                if(swipeView.currentIndex == 0)
-                    "Defina uma senha\nde 3 dígitos para\nseu SmartMirror."
-                else if(swipeView.currentIndex == 1)
-                    "Agora precisamos\nque você nos conec-\nte ao seu wifi."
-                else
-                    "Para terminar,\nconfigure sua rede\nsocial preferida."
-            }
-        }
-        Image {
-            source: "qrc:/ballon.png"
-            height: 172
-            width: 200
-            rotation: -20
-        }
-    }
+//        Label {
+//            topPadding: 35
+//            leftPadding: 27
+//            font: Qt.font({ family: "Serif", weight: Font.Bold })
+//            text: {
+//                if(swipeView.currentIndex == 0)
+//                    "Defina uma senha\nde 3 dígitos para\nseu SmartMirror."
+//                else if(swipeView.currentIndex == 1)
+//                    "Agora precisamos\nque você nos conec-\nte ao seu wifi."
+//                else
+//                    "Para terminar,\nconfigure sua rede\nsocial preferida."
+//            }
+//        }
+//        Image {
+//            source: "qrc:/ballon.png"
+//            height: 172
+//            width: 200
+//            rotation: -20
+//        }
+//    }
     Image {
         id: logo
         source: "qrc:/logo.png"
@@ -77,9 +77,9 @@ Item {
             property var password: new Array
             SequentialAnimation {
                 id: animation
-                NumberAnimation { target: login; property: "x"; to: 20; duration: 200 }
-                NumberAnimation { target: login; property: "x"; to: -20; duration: 100 }
-                NumberAnimation { target: login; property: "x"; to: 0; duration: 200 }
+                NumberAnimation { target: login; property: "x"; to: 20; duration: 100 }
+                NumberAnimation { target: login; property: "x"; to: -20; duration: 50 }
+                NumberAnimation { target: login; property: "x"; to: 0; duration: 100 }
                 onStopped: {
                     login.password[0].highlighted = false
                     login.password[1].highlighted = false

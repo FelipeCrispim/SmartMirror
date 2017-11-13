@@ -11,19 +11,19 @@ BluetoothManager::BluetoothManager(QObject *parent) : QObject(parent)
     // Turn Bluetooth on
     //    localDevice.powerOn();
 
-    m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent(this);
+//    m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent(this);
 
 
-    connect(m_discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)),
-            this, SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
-    connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
-    connect(m_discoveryAgent, SIGNAL(canceled()), this, SLOT(scanCanceled()));
+//    connect(m_discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)),
+//            this, SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
+//    connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
+//    connect(m_discoveryAgent, SIGNAL(canceled()), this, SLOT(scanCanceled()));
 
-    startDiscovery();
+//    startDiscovery();
 
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-    timer->start(5000);
+//    QTimer *timer = new QTimer(this);
+//    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+//    timer->start(5000);
 }
 
 BluetoothManager::~BluetoothManager()
