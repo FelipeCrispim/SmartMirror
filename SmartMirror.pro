@@ -1,4 +1,4 @@
-QT += qml quick network bluetooth positioning
+QT += qml quick network bluetooth positioning core
 
 CONFIG += c++11
 

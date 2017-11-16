@@ -3,27 +3,33 @@
 #include <QBluetoothLocalDevice>
 #include <QDebug>
 #include <QTimer>
+#include <QSettings>
 
 bool deviceFound = false;
+QString settings;
+QTimer *timer;
+bool signUp = true;
+
 BluetoothManager::BluetoothManager(QObject *parent) : QObject(parent)
 {
     //    QBluetoothLocalDevice localDevice;
     // Turn Bluetooth on
     //    localDevice.powerOn();
 
-//    m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent(this);
+    m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent(this);
 
 
-//    connect(m_discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)),
-//            this, SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
-//    connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
-//    connect(m_discoveryAgent, SIGNAL(canceled()), this, SLOT(scanCanceled()));
+    connect(m_discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)),
+            this, SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
+    connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
+    connect(m_discoveryAgent, SIGNAL(canceled()), this, SLOT(scanCanceled()));
 
 //    startDiscovery();
 
-//    QTimer *timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-//    timer->start(5000);
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+
+    m_devicesList.clear();
 }
 
 BluetoothManager::~BluetoothManager()
@@ -35,7 +41,7 @@ void BluetoothManager::update()
 {
 
     m_discoveryAgent->stop();
-    if(deviceFound == false) {
+    if(deviceFound == false && signUp == false) {
         m_device.clear();
         m_device = "notFound";
         emit deviceBluetoothChanged();
@@ -51,6 +57,22 @@ void BluetoothManager::startDiscovery()
     m_discoveryAgent->start();
 }
 
+void BluetoothManager::setDevice(QString address)
+{
+    settings = address;
+    timer->start(7000);
+}
+
+QString BluetoothManager::getDevice()
+{
+    return settings;
+}
+
+void BluetoothManager::registering(bool flag)
+{
+    signUp = flag;
+}
+
 void BluetoothManager::scanCanceled()
 {
     //    qDebug() << "deviceCanceled";
@@ -61,21 +83,29 @@ void BluetoothManager::scanCanceled()
 void BluetoothManager::deviceDiscovered(const QBluetoothDeviceInfo &deviceInfo)
 {
 
-    if(deviceInfo.address().toString().contains("00:A0:C6:24:16:30")) {
-        qDebug() << "foi";
+    if(deviceInfo.address().toString() == settings && signUp == false) {
         deviceFound = true;
         m_device.clear();
         m_device = deviceInfo.address().toString();
         emit deviceBluetoothChanged();
     }
 
-        qDebug() << "Found new device:" << deviceInfo.name() << ", rssi:" << deviceInfo.address().toString();
+//        qDebug() << "Found new device:" << deviceInfo.name() << ", rssi:" << deviceInfo.address().toString();
+    if(!m_devicesList.contains(deviceInfo.name()) && signUp == true){
+        m_devicesList.append("{\"name\":\""+deviceInfo.name()+"\",\"address\":\""+deviceInfo.address().toString()+"\"}");
+        emit devicesListChanged();
+    }
 }
 
 
 QString BluetoothManager::deviceBluetooth() const
 {
     return m_device;
+}
+
+QStringList BluetoothManager::devicesList()
+{
+    return m_devicesList;
 }
 
 void BluetoothManager::discoveryFinished()

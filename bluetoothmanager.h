@@ -12,15 +12,20 @@ class BluetoothManager : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString deviceBluetooth READ deviceBluetooth NOTIFY deviceBluetoothChanged)
+    Q_PROPERTY(QStringList devicesList READ devicesList NOTIFY devicesListChanged)
 
 public:
     explicit BluetoothManager(QObject *parent = 0);
     ~BluetoothManager();
-    void startDiscovery();
+    Q_INVOKABLE void startDiscovery();
+    Q_INVOKABLE void setDevice(QString address);
+    Q_INVOKABLE QString getDevice();
+    Q_INVOKABLE void registering(bool flag);
     void stopDiscovery();
     QString deviceBluetooth() const;
-
+    QStringList devicesList();
     void connectDevice(const QBluetoothDeviceInfo device);
+    QStringList m_devicesList;
 private:
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent;
     QString m_device;
@@ -29,6 +34,7 @@ private:
 
 signals:
     void deviceBluetoothChanged();
+    void devicesListChanged();
 
 public slots:
     void deviceDiscovered(const QBluetoothDeviceInfo &serviceInfo);

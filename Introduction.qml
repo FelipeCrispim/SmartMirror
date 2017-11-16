@@ -5,40 +5,32 @@ import QtQuick.Layouts 1.1
 
 Item {
     id: rect
-    //    width: 100; height: 100
-    //    anchors.fill: parent
 
+    Component {
+        id: settingBluettoth
+        SettingBluettoth {
+            onAdvanceSwipeView: {
+                bluetoothManager.registering(false);
+                swipeView.currentIndex = 2
+                stackView.pop();
+            }
+        }
+    }
 
-//    Item {
-////        anchors.right: parent.right
-////        anchors.bottom: parent.bottom
-////        anchors.leftMargin: 250
-////        anchors.margins: 50
-//        anchors.bottom: logo.top
-//        anchors.right: parent.right
-//        anchors.rightMargin: 200
-//        anchors.bottomMargin: 150
-
-//        Label {
-//            topPadding: 35
-//            leftPadding: 27
-//            font: Qt.font({ family: "Serif", weight: Font.Bold })
-//            text: {
-//                if(swipeView.currentIndex == 0)
-//                    "Defina uma senha\nde 3 dígitos para\nseu SmartMirror."
-//                else if(swipeView.currentIndex == 1)
-//                    "Agora precisamos\nque você nos conec-\nte ao seu wifi."
-//                else
-//                    "Para terminar,\nconfigure sua rede\nsocial preferida."
-//            }
-//        }
-//        Image {
-//            source: "qrc:/ballon.png"
-//            height: 172
-//            width: 200
-//            rotation: -20
-//        }
-//    }
+    Label {
+        bottomPadding: 5
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        font: Qt.font({ pixelSize: 30, family: "Serif", weight: Font.Bold })
+        text: {
+            if(swipeView.currentIndex == 0)
+                "Defina um tipo de desbloqueio"
+            else if(swipeView.currentIndex == 1)
+                "Agora precisamos\nque você nos conec-\nte ao seu wifi."
+            else
+                "Para terminar,\nconfigure sua rede\nsocial preferida."
+        }
+    }
     Image {
         id: logo
         source: "qrc:/logo.png"
@@ -73,6 +65,29 @@ Item {
         //            onTriggered: swipeView.currentIndex += 1
         //        }
         Item {
+            Row {
+                anchors.centerIn: parent
+                spacing: 10
+                Button {
+                    text: "Bluetooth"
+                    font: Qt.font({ pixelSize: 30, family: "Serif", weight: Font.Bold })
+                    height: 100
+                    width: 200
+                    onClicked: {
+                        bluetoothManager.registering(true);
+                        stackView.push(settingBluettoth)
+                    }
+                }
+                Button {
+                    text: "3 dígitos"
+                    font: Qt.font({ pixelSize: 30, family: "Serif", weight: Font.Bold })
+                    height: 100
+                    width: 200
+                }
+            }
+        }
+
+        Item {
             id: login
             property var password: new Array
             SequentialAnimation {
@@ -91,7 +106,7 @@ Item {
             function analysePassword(){
                 login.enabled = false
                 if(login.password[0].text === "1" && login.password[1].text === "2" && login.password[2].text === "3")
-//                    stackView.pop();
+                    //                    stackView.pop();
                     swipeView.currentIndex += 1
                 else
                     animation.running = true

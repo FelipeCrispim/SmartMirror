@@ -14,6 +14,11 @@ ApplicationWindow {
     property int hours: 0
     property int minutes: 0
     property int seconds: 0
+    Component.onCompleted: {
+        root.timeChanged()
+        stackView.push(Qt.resolvedUrl("Introduction.qml"))
+    }
+
     PositionSource {
         id: coord
     }
@@ -36,7 +41,6 @@ ApplicationWindow {
         interval: 1000; running: true; repeat: true;
         onTriggered: root.timeChanged()
     }
-    Component.onCompleted: root.timeChanged()
     function timeChanged() {
         var date = new Date;
         root.date = date.getDate() //1 to 31
@@ -55,7 +59,6 @@ ApplicationWindow {
         id: stackView
         focus: true
         anchors.fill: parent
-
         initialItem: Item {
             id: topItem
 
@@ -151,18 +154,19 @@ ApplicationWindow {
                 }
             }
         }
-//        Component.onCompleted: stackView.push(Qt.resolvedUrl("Introduction.qml"))
+
     }
     Rectangle {
         id: blockScreen
-        property bool blackScreen: true
+        property bool blackScreen: false
         property string device: bluetoothManager.deviceBluetooth
         anchors.fill: parent
         color: "black"
         opacity: 1
         visible: false
         onDeviceChanged: {
-            if(device == "00:A0:C6:24:16:30" && blackScreen == true){
+            console.log("device: "+device)
+            if(device === bluetoothManager.getDevice() && blackScreen == true){
                 welcomeLabel.visible = true
                 animator.from = 1
                 animator.to = 0
