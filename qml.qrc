@@ -11,7 +11,9 @@
         <file>13-Partly-Cloudy-icon.png</file>
         <file>giphy.gif</file>
         <file>ballon.png</file>
-        <file>SettingBluettoth.qml</file>
+        <file>SettingsBluettoth.qml</file>
         <file>Definitions.js</file>
+        <file>SettingsDigit.qml</file>
+        <file>back.png</file>
     </qresource>
 </RCC>

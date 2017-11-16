@@ -29,6 +29,7 @@ BluetoothManager::BluetoothManager(QObject *parent) : QObject(parent)
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
 
+
     m_devicesList.clear();
 }
 
@@ -39,14 +40,14 @@ BluetoothManager::~BluetoothManager()
 
 void BluetoothManager::update()
 {
-
     m_discoveryAgent->stop();
-    if(deviceFound == false && signUp == false) {
-        m_device.clear();
-        m_device = "notFound";
-        emit deviceBluetoothChanged();
-    }
-    deviceFound = false;
+//    if(deviceFound == false && signUp == false) {
+//        m_device.clear();
+//        m_device = "notFound";
+//        emit deviceBluetoothChanged();
+//    }
+//    deviceFound = false;
+    qDebug() << "star/stop";
     m_discoveryAgent->start();
 
 }
@@ -55,12 +56,19 @@ void BluetoothManager::startDiscovery()
 {
     qDebug() << "scanning";
     m_discoveryAgent->start();
+//    timer->start(5000);
 }
 
 void BluetoothManager::setDevice(QString address)
 {
+    deviceFound = true;
+    m_device.clear();
+    m_device = address;
+    emit deviceBluetoothChanged();
     settings = address;
-    timer->start(7000);
+
+    m_discoveryAgent->stop();
+    timer->stop();
 }
 
 QString BluetoothManager::getDevice()
@@ -83,13 +91,13 @@ void BluetoothManager::scanCanceled()
 void BluetoothManager::deviceDiscovered(const QBluetoothDeviceInfo &deviceInfo)
 {
 
-    if(deviceInfo.address().toString() == settings && signUp == false) {
-        deviceFound = true;
-        m_device.clear();
-        m_device = deviceInfo.address().toString();
-        emit deviceBluetoothChanged();
-    }
-
+//    if(deviceInfo.address().toString() == settings && signUp == false) {
+//        deviceFound = true;
+//        m_device.clear();
+//        m_device = deviceInfo.address().toString();
+//        emit deviceBluetoothChanged();
+//    }
+    qDebug() << "detected";
 //        qDebug() << "Found new device:" << deviceInfo.name() << ", rssi:" << deviceInfo.address().toString();
     if(!m_devicesList.contains(deviceInfo.name()) && signUp == true){
         m_devicesList.append("{\"name\":\""+deviceInfo.name()+"\",\"address\":\""+deviceInfo.address().toString()+"\"}");

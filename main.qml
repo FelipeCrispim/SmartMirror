@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import QtPositioning 5.3
+import QtBluetooth 5.2
 
 ApplicationWindow {
     id: root
@@ -16,7 +17,44 @@ ApplicationWindow {
     property int seconds: 0
     Component.onCompleted: {
         root.timeChanged()
-        stackView.push(Qt.resolvedUrl("Introduction.qml"))
+        stackView.push(introduction)
+    }
+    Timer {
+        id: btTimer
+        interval: 7000; running: false; repeat: true;
+        onTriggered: {
+            btModel.running = false
+            btModel.running = true
+
+            if(!btModel.savedDeviceFound){
+                console.log("ñ achou")
+                blockScreen.visible = true
+            } else {
+                blockScreen.visible = false
+            }
+
+            btModel.savedDeviceFound = false
+        }
+    }
+
+    BluetoothDiscoveryModel {
+        id: btModel
+        property bool savedDeviceFound: true
+        running: false
+        discoveryMode: BluetoothDiscoveryModel.DeviceDiscovery
+        onDeviceDiscovered: {
+            if(device == bluetoothManager.deviceBluetooth){
+                savedDeviceFound = true
+            }
+
+        }
+    }
+
+    Component {
+        id: introduction
+        Introduction {
+            onFinishedSignup: btTimer.running = true
+        }
     }
 
     PositionSource {
@@ -159,44 +197,45 @@ ApplicationWindow {
     Rectangle {
         id: blockScreen
         property bool blackScreen: false
-        property string device: bluetoothManager.deviceBluetooth
+        //        property string device: bluetoothManager.deviceBluetooth
         anchors.fill: parent
         color: "black"
         opacity: 1
         visible: false
-        onDeviceChanged: {
-            console.log("device: "+device)
-            if(device === bluetoothManager.getDevice() && blackScreen == true){
-                welcomeLabel.visible = true
-                animator.from = 1
-                animator.to = 0
-                animator.running = true
-                blackScreen = false
-            } else if (device == "notFound" && blackScreen == false){
-                animator.from = 0
-                animator.to = 1
-                animator.running = true
-                blackScreen = true
-            }
+        //        function dark(){
+        //            if(btModel.savedDeviceFound == true){
+        //                welcomeLabel.visible = true
+        //                animator.from = 1
+        //                animator.to = 0
+        //                animator.running = true
+        //                blackScreen = false
+        //            } else {
+        //                animator.from = 0
+        //                animator.to = 1
+        //                animator.running = true
+        //                blackScreen = true
+        //            }
+        //        }
+
+    }
+    OpacityAnimator {
+        id: animator
+        target: blockScreen;
+        running: false
+        duration: 2500
+        onStopped: welcomeLabel.visible = false
+    }
+    Label {
+        id: welcomeLabel
+        Component.onCompleted: console.log(welcomeLabel.text)
+        text: {
+            if(root.hours < 12) return "Bom dia!"
+            else if(root.hours>=12 && root.hours <18) return "Boa tarde!"
+            else return "Boa noite!"
         }
-        OpacityAnimator {
-            id: animator
-            target: blockScreen;
-            running: false
-            duration: 2500
-            onStopped: welcomeLabel.visible = false
-        }
-        Label {
-            id: welcomeLabel
-            Component.onCompleted: console.log(welcomeLabel.text)
-            text: {
-                if(root.hours < 12) return "Bom dia!"
-                else if(root.hours>=12 && root.hours <18) return "Boa tarde!"
-                else return "Boa noite!"
-            }
-            anchors.centerIn: parent
-            font.pixelSize: 38
-            visible: false
-        }
+        anchors.centerIn: parent
+        font.pixelSize: 38
+        visible: false
     }
 }
+

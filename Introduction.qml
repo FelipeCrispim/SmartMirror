@@ -2,17 +2,36 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
+import QtQuick.Controls.Styles 1.4
 
 Item {
     id: rect
+    signal finishedSignup()
+    Timer {
+        id: timer
+        interval: 1000; running: false; repeat: false;
+        onTriggered: {
+            stackView.pop();
+        }
+    }
 
     Component {
-        id: settingBluettoth
-        SettingBluettoth {
+        id: settingsBluettoth
+        SettingsBluettoth {
             onAdvanceSwipeView: {
                 bluetoothManager.registering(false);
-                swipeView.currentIndex = 2
-                stackView.pop();
+                swipeView.currentIndex += 1
+                finishedSignup()
+                timer.start()
+            }
+        }
+    }
+
+    Component {
+        id: settingsDigit
+        SettingsDigit {
+            onAdvanceSwipeView: {
+                swipeView.currentIndex += 1
             }
         }
     }
@@ -26,9 +45,9 @@ Item {
             if(swipeView.currentIndex == 0)
                 "Defina um tipo de desbloqueio"
             else if(swipeView.currentIndex == 1)
-                "Agora precisamos\nque você nos conec-\nte ao seu wifi."
+                "Conecnte-nos ao seu wifi"
             else
-                "Para terminar,\nconfigure sua rede\nsocial preferida."
+                "Forneça seu usuário do twitter"
         }
     }
     Image {
@@ -75,7 +94,7 @@ Item {
                     width: 200
                     onClicked: {
                         bluetoothManager.registering(true);
-                        stackView.push(settingBluettoth)
+                        stackView.push(settingsBluettoth)
                     }
                 }
                 Button {
@@ -83,74 +102,9 @@ Item {
                     font: Qt.font({ pixelSize: 30, family: "Serif", weight: Font.Bold })
                     height: 100
                     width: 200
-                }
-            }
-        }
-
-        Item {
-            id: login
-            property var password: new Array
-            SequentialAnimation {
-                id: animation
-                NumberAnimation { target: login; property: "x"; to: 20; duration: 100 }
-                NumberAnimation { target: login; property: "x"; to: -20; duration: 50 }
-                NumberAnimation { target: login; property: "x"; to: 0; duration: 100 }
-                onStopped: {
-                    login.password[0].highlighted = false
-                    login.password[1].highlighted = false
-                    login.password[2].highlighted = false
-                    login.password = []
-                    login.enabled = true
-                }
-            }
-            function analysePassword(){
-                login.enabled = false
-                if(login.password[0].text === "1" && login.password[1].text === "2" && login.password[2].text === "3")
-                    //                    stackView.pop();
-                    swipeView.currentIndex += 1
-                else
-                    animation.running = true
-            }
-
-            GridView {
-                id: gridButton
-                model: ["7", "8", "9", "4", "5", "6", "1", "2", "3", "", "0", ""]
-                height: 400
-                width: 300
-                anchors.centerIn: parent
-                cellWidth: 100; cellHeight: 100
-                interactive: false
-
-                delegate:  Button {
-                    id: digitButton
-                    width: 80; height: 80
-                    visible: modelData != ""? true : false
-                    text: modelData
-                    highlighted: false
                     onClicked: {
-                        if (digitButton.highlighted == false) {
-                            digitButton.highlighted = true
-                            login.password.push(digitButton)
-                            if(login.password.length == 3) {
-                                login.analysePassword()
-
-                            }
-                        } else {
-                            login.password.pop()
-                            digitButton.highlighted = false
-                        }
-
+                        stackView.push(settingsDigit)
                     }
-                    font: Qt.font({ family: "Serif", pointSize: 24, weight: Font.Bold })
-                    background: Rectangle {
-                        id: backgroundButton
-
-                        color: digitButton.highlighted? Qt.rgba(0.9,0.9,0.9,0.6) : Qt.rgba(0.1,0.1,0.1,0.85)
-                        radius: height/2
-                        border.width: 2
-                        border.color: "white"
-                    }
-
                 }
             }
         }
@@ -175,6 +129,10 @@ Item {
                     id: textField1
                     placeholderText: qsTr("Senha da rede")
                     width: root.width/2
+                    onAccepted: {
+                        Qt.inputMethod.show();
+
+                    }
                 }
                 Button {
                     text: "Conectar"
@@ -187,32 +145,23 @@ Item {
             }
         }
         Item {
-            Column {
-                anchors.centerIn: parent
-                spacing: 15
-                Label {
-                    text: "Configure sua rede social"
-                    font.weight: Font.Bold
-                    anchors.horizontalCenter: parent.horizontalCenter
-                }
-
-                TextField {
-                    placeholderText: qsTr("Rede")
+//            anchors.fill: parent
+                Rectangle {
+                    anchors.centerIn: parent
+                    color: "transparent"
+                    border.color: "white"
+                    radius: 2
+                    height: 100
                     width: root.width/2
-                }
-                TextField {
-                    placeholderText: qsTr("Senha da rede")
-                    width: root.width/2
-                }
-                Button {
-                    text: "Entrar"
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    onClicked: {
-                        stackView.pop();
-                        //swipeView.currentIndex += 1
+                    TextInput {
+                        anchors.fill: parent
+                        verticalAlignment: TextInput.AlignVCenter
+                        leftPadding: 5
+                        color: "white"
+                        font: Qt.font({pixelSize: 30, family: "Serif"})
                     }
                 }
-            }
+
         }
     }
 }

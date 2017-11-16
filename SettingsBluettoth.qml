@@ -41,7 +41,7 @@ Item {
                     var JsonObject = JSON.parse(modelData);
                     bluetoothManager.setDevice(JsonObject.address)
                     advanceSwipeView()
-                    stackView.pop();
+                    stackView.pop()
                 }
             }
         }
@@ -60,6 +60,21 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             height: 30
             width: 30
+        }
+    }
+
+    Image {
+        source: "qrc:/back.png"
+        anchors.leftMargin: 5
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        width: 50
+        height: 50
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                stackView.pop()
+            }
         }
     }
 }
