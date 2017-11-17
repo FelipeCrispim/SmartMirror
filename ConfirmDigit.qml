@@ -7,8 +7,8 @@ import QtBluetooth 5.2
 
 Item {
     id: login
-    signal advanceSwipeView()
-    property var password: new Array
+    signal correctPass()
+    signal noPass()
     property var confirmPassword: new Array
     property alias text: labelBot.text
     SequentialAnimation {
@@ -20,28 +20,25 @@ Item {
             login.confirmPassword[0].highlighted = false
             login.confirmPassword[1].highlighted = false
             login.confirmPassword[2].highlighted = false
-            login.password = []
             login.confirmPassword = []
             login.enabled = true
         }
     }
     function analysePassword(){
         login.enabled = false
-        if(login.password[0].text === login.confirmPassword[0].text &&
-                login.password[1].text === login.confirmPassword[1].text &&
-                login.password[2].text === login.confirmPassword[2].text) {
-            advanceSwipeView()
+        if(login.confirmPassword[0].text === "1" &&
+                login.confirmPassword[1].text === "2" &&
+                login.confirmPassword[2].text === "3") {
+            correctPass()
             stackView.pop();
         } else {
             animation.running = true
-            labelBot.text = "Senhas não conferem, digite-as novamente"
-            gridButton.confirming  =false
+            labelBot.text = "Senha errada, digite-a novamente"
         }
     }
 
     GridView {
         id: gridButton
-        property bool confirming: false
         model: ["7", "8", "9", "4", "5", "6", "1", "2", "3", "", "0", ""]
         height: 400
         width: 300
@@ -59,28 +56,16 @@ Item {
             onClicked: {
                 if (digitButton.highlighted == false) {
                     digitButton.highlighted = true
-
-                    if(gridButton.confirming == false){
-                        login.password.push(digitButton)
-                        if(login.password.length == 3) {
-                            gridButton.confirming = true
-                            labelBot.text = "Por favor, confirme sua senha"
-                            login.password[0].highlighted = false
-                            login.password[1].highlighted = false
-                            login.password[2].highlighted = false
-                            login.enabled = true
-                        }
-                    } else {
-                        login.confirmPassword.push(digitButton)
-                        if(login.confirmPassword.length == 3) {
-                            login.analysePassword()
-                        }
+                    login.confirmPassword.push(digitButton)
+                    if(login.confirmPassword.length == 3) {
+                        login.analysePassword()
                     }
+
                 }
                 else {
-                    for(var i = login.password.length - 1; i >= 0; i--) {
-                        if(login.password[i] === digitButton) {
-                            login.password.splice(i, 1);
+                    for(var i = login.confirmPassword.length - 1; i >= 0; i--) {
+                        if(login.confirmPassword[i] === digitButton) {
+                            login.confirmPassword.splice(i, 1);
                         }
                     }
                     digitButton.highlighted = false
@@ -103,7 +88,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         bottomPadding: 5
-        text: "Digite 3 dígitos"
+        text: "Digite sua senha"
         font: Qt.font({ pixelSize: 30, family: Def.standardizedFontFamily(), weight: Font.Bold })
     }
     Image {
@@ -116,6 +101,7 @@ Item {
         MouseArea {
             anchors.fill: parent
             onClicked: {
+                noPass()
                 stackView.pop()
             }
         }

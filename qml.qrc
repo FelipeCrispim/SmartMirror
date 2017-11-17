@@ -15,5 +15,7 @@
         <file>Definitions.js</file>
         <file>SettingsDigit.qml</file>
         <file>back.png</file>
+        <file>keypad.png</file>
+        <file>ConfirmDigit.qml</file>
     </qresource>
 </RCC>

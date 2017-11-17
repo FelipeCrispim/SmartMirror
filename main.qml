@@ -17,7 +17,8 @@ ApplicationWindow {
     property int seconds: 0
     Component.onCompleted: {
         root.timeChanged()
-        stackView.push(introduction)
+//        stackView.push(introduction)
+        blockScreen.visible = true
     }
     Timer {
         id: btTimer
@@ -99,7 +100,6 @@ ApplicationWindow {
         anchors.fill: parent
         initialItem: Item {
             id: topItem
-
             Column{
                 anchors.left: parent.left
                 anchors.top: parent.top
@@ -191,6 +191,7 @@ ApplicationWindow {
                     }
                 }
             }
+
         }
 
     }
@@ -202,6 +203,32 @@ ApplicationWindow {
         color: "black"
         opacity: 1
         visible: false
+        Component {
+            id: keypadPage
+            ConfirmDigit {
+                onCorrectPass: {
+                }
+                onNoPass: {
+                    blockScreen.visible = true
+                }
+            }
+        }
+
+        Image {
+            source: "qrc:/keypad.png"
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            height: 52
+            width: 40
+            anchors.margins: 5
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    stackView.push(keypadPage)
+                    blockScreen.visible = false
+                }
+            }
+        }
         //        function dark(){
         //            if(btModel.savedDeviceFound == true){
         //                welcomeLabel.visible = true
