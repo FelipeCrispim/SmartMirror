@@ -1,4 +1,8 @@
 QT += qml quick network bluetooth positioning core
+static {
+    QT += svg
+    QTPLUGIN += qtvirtualkeyboardplugin
+}
 
 CONFIG += c++11
 

@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
+import "keyboard" as CustomKeyboard
 
 Item {
     id: rect
@@ -129,10 +130,6 @@ Item {
                     id: textField1
                     placeholderText: qsTr("Senha da rede")
                     width: root.width/2
-                    onAccepted: {
-                        Qt.inputMethod.show();
-
-                    }
                 }
                 Button {
                     text: "Conectar"
@@ -145,22 +142,8 @@ Item {
             }
         }
         Item {
-//            anchors.fill: parent
-                Rectangle {
-                    anchors.centerIn: parent
-                    color: "transparent"
-                    border.color: "white"
-                    radius: 2
-                    height: 100
-                    width: root.width/2
-                    TextInput {
-                        anchors.fill: parent
-                        verticalAlignment: TextInput.AlignVCenter
-                        leftPadding: 5
-                        color: "white"
-                        font: Qt.font({pixelSize: 30, family: "Serif"})
-                    }
-                }
+            CustomKeyboard.Keyboard {
+            }
 
         }
     }

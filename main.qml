@@ -17,8 +17,8 @@ ApplicationWindow {
     property int seconds: 0
     Component.onCompleted: {
         root.timeChanged()
-//        stackView.push(introduction)
-        blockScreen.visible = true
+        stackView.push(introduction)
+//        blockScreen.visible = true
     }
     Timer {
         id: btTimer
@@ -213,6 +213,7 @@ ApplicationWindow {
                 }
             }
         }
+
 
         Image {
             source: "qrc:/keypad.png"

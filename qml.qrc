@@ -17,5 +17,20 @@
         <file>back.png</file>
         <file>keypad.png</file>
         <file>ConfirmDigit.qml</file>
+        <file>keyboard/Basic.qml</file>
+        <file>keyboard/TextBase.qml</file>
+        <file>keyboard/TextField.qml</file>
+        <file>bluetoothmanager.cpp</file>
+        <file>bluetoothmanager.h</file>
+        <file>main.cpp</file>
+        <file>networkmanager.cpp</file>
+        <file>networkmanager.h</file>
+        <file>keyboard/Keyboard.qml</file>
+        <file>keyboard/HandwritingModeButton.qml</file>
+        <file>keyboard/AutoScroller.qml</file>
+        <file>keyboard/ScrollBar.qml</file>
+        <file>keyboard/FloatingButton_Active.svg</file>
+        <file>keyboard/FloatingButton_Available.svg</file>
+        <file>keyboard/FloatingButton_Unavailable.svg</file>
     </qresource>
 </RCC>
