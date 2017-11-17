@@ -4,6 +4,7 @@
 #include <QQmlContext>
 #include "networkmanager.h"
 #include "bluetoothmanager.h"
+#include "process.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,10 +15,12 @@ int main(int argc, char *argv[])
 
     NetworkManager wifi;
     BluetoothManager bluetooth;
+    Process myProcess;
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("networkManager", &wifi);
     engine.rootContext()->setContextProperty("bluetoothManager", &bluetooth);
+    qmlRegisterType<Process>("Process", 1, 0, "Process");
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 
     wifi.isOnline();

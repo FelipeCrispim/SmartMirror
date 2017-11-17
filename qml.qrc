@@ -32,5 +32,8 @@
         <file>keyboard/FloatingButton_Active.svg</file>
         <file>keyboard/FloatingButton_Available.svg</file>
         <file>keyboard/FloatingButton_Unavailable.svg</file>
+        <file>twitter/p_pedrinhu.csv</file>
+        <file>twitter/twitter.png</file>
+        <file>twitter/twitter_time_line.py</file>
     </qresource>
 </RCC>

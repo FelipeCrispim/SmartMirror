@@ -46,7 +46,7 @@ Item {
             if(swipeView.currentIndex == 0)
                 "Defina um tipo de desbloqueio"
             else if(swipeView.currentIndex == 1)
-                "Conecnte-nos ao seu wifi"
+                "Conecte-nos ao seu wifi"
             else
                 "Forneça seu usuário do twitter"
         }
@@ -142,7 +142,19 @@ Item {
             }
         }
         Item {
+            Image {
+                id: twitter
+                source: "qrc:/twitter/twitter.png"
+                height: 42
+                width: 50
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: 80
+
+
+//                anchors.bottom: keyboard.top
+            }
             CustomKeyboard.Keyboard {
+                id: keyboard
             }
 
         }

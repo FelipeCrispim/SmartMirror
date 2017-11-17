@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import QtPositioning 5.3
 import QtBluetooth 5.2
+import Process 1.0
 
 ApplicationWindow {
     id: root
@@ -17,8 +18,17 @@ ApplicationWindow {
     property int seconds: 0
     Component.onCompleted: {
         root.timeChanged()
-        stackView.push(introduction)
-//        blockScreen.visible = true
+                stackView.push(introduction)
+        //        blockScreen.visible = true
+    }
+    Process {
+        id: process
+        Component.onCompleted: {
+            var command = "/Users/felipecrispim/dev/Qt-workspace/smart_mirror/twitter/twitter_time_line.py" +
+                    " p_pedrinhu " + "/Users/felipecrispim/dev/Qt-workspace/smart_mirror/twitter/"
+            process.start("python", command)
+        }
+        onAnswer: ttLabel.text = ans;
     }
     Timer {
         id: btTimer
@@ -104,7 +114,7 @@ ApplicationWindow {
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.margins: 15
-                width: root.width/2
+                width: 30
                 Label {
                     property var days: ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado",""]
                     text: days[root.dayInWeek]+", "+root.date
@@ -131,38 +141,15 @@ ApplicationWindow {
                     }
                 }
                 Label {
-                    property string goal1: "Caminhar para o trabalho"
-                    text: goal1
+                    id: ttLabel
+                    text: "goal1"
+                    width: 150
+                    wrapMode: Label.WordWrap
                     font.bold: true
                     topPadding: 30
                     font.pixelSize: 15
                 }
-                Label {
-                    text: "07:00 - 07:30"
-                    font.pixelSize: 14
-                }
-                Label {
-                    property string goal1: "Tomar remédio"
-                    text: goal1
-                    font.bold: true
-                    topPadding: 10
-                    font.pixelSize: 15
-                }
-                Label {
-                    text: "09:00"
-                    font.pixelSize: 14
-                }
-                Label {
-                    property string goal1: "Reunião via Skype"
-                    text: goal1
-                    font.bold: true
-                    topPadding: 10
-                    font.pixelSize: 15
-                }
-                Label {
-                    text: "11:00 - 12:00"
-                    font.pixelSize: 14
-                }
+
             }
             Column {
                 anchors.right: parent.right
