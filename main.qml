@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.0
 import QtPositioning 5.3
 import QtBluetooth 5.2
 import Process 1.0
+import Controller 1.0
 
 ApplicationWindow {
     id: root
@@ -18,15 +19,23 @@ ApplicationWindow {
     property int seconds: 0
     Component.onCompleted: {
         root.timeChanged()
-                stackView.push(introduction)
-        //        blockScreen.visible = true
+        if(controller.firstTimeApp() == true)
+            stackView.push(introduction)
+        else {
+            blockScreen.visible = true
+            btTimer.start()
+        }
     }
+    Controller {
+        id: controller
+    }
+
     Process {
         id: process
         Component.onCompleted: {
             var command = "/Users/felipecrispim/dev/Qt-workspace/smart_mirror/twitter/twitter_time_line.py" +
                     " p_pedrinhu " + "/Users/felipecrispim/dev/Qt-workspace/smart_mirror/twitter/"
-            process.start("python", command)
+            //            process.start("python", command)
         }
         onAnswer: ttLabel.text = ans;
     }
@@ -37,25 +46,23 @@ ApplicationWindow {
             btModel.running = false
             btModel.running = true
 
-            if(!btModel.savedDeviceFound){
-                console.log("ñ achou")
-                blockScreen.visible = true
-            } else {
+            if(btModel.savedUserFound == true){
                 blockScreen.visible = false
+            } else {
+                blockScreen.visible = true
             }
-
-            btModel.savedDeviceFound = false
+            btModel.savedUserFound = false
         }
     }
 
     BluetoothDiscoveryModel {
         id: btModel
-        property bool savedDeviceFound: true
+        property bool savedUserFound: true
         running: false
         discoveryMode: BluetoothDiscoveryModel.DeviceDiscovery
         onDeviceDiscovered: {
-            if(device == bluetoothManager.deviceBluetooth){
-                savedDeviceFound = true
+            if(controller.isThereUser(device)){
+                savedUserFound = true
             }
 
         }
@@ -185,7 +192,6 @@ ApplicationWindow {
     Rectangle {
         id: blockScreen
         property bool blackScreen: false
-        //        property string device: bluetoothManager.deviceBluetooth
         anchors.fill: parent
         color: "black"
         opacity: 1

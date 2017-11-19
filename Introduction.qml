@@ -20,10 +20,9 @@ Item {
         id: settingsBluettoth
         SettingsBluettoth {
             onAdvanceSwipeView: {
-                bluetoothManager.registering(false);
                 swipeView.currentIndex += 1
-                finishedSignup()
-                timer.start()
+//                finishedSignup()
+                stackView.pop();
             }
         }
     }
@@ -32,7 +31,8 @@ Item {
         id: settingsDigit
         SettingsDigit {
             onAdvanceSwipeView: {
-                swipeView.currentIndex += 1
+                swipeView.currentIndex += 1                
+                stackView.pop();
             }
         }
     }
@@ -149,12 +149,14 @@ Item {
                 width: 50
                 anchors.horizontalCenter: parent.horizontalCenter
                 y: 80
-
-
 //                anchors.bottom: keyboard.top
             }
             CustomKeyboard.Keyboard {
                 id: keyboard
+                onEnterClicked: {
+                    finishedSignup();
+                    stackView.pop();
+                }
             }
 
         }

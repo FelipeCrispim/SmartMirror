@@ -5,6 +5,7 @@
 #include "networkmanager.h"
 #include "bluetoothmanager.h"
 #include "process.h"
+#include "controller.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,13 +15,14 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     NetworkManager wifi;
-    BluetoothManager bluetooth;
+//    BluetoothManager bluetooth;
     Process myProcess;
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("networkManager", &wifi);
-    engine.rootContext()->setContextProperty("bluetoothManager", &bluetooth);
+//    engine.rootContext()->setContextProperty("bluetoothManager", &bluetooth);
     qmlRegisterType<Process>("Process", 1, 0, "Process");
+    qmlRegisterType<Controller>("Controller", 1, 0, "Controller");
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 
     wifi.isOnline();

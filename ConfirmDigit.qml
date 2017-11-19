@@ -3,7 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 import "Definitions.js" as Def
-import QtBluetooth 5.2
+import Controller 1.0
 
 Item {
     id: login
@@ -11,6 +11,11 @@ Item {
     signal noPass()
     property var confirmPassword: new Array
     property alias text: labelBot.text
+
+    Controller{
+        id: controller
+    }
+
     SequentialAnimation {
         id: animation
         NumberAnimation { target: login; property: "x"; to: 20; duration: 100 }
@@ -26,9 +31,9 @@ Item {
     }
     function analysePassword(){
         login.enabled = false
-        if(login.confirmPassword[0].text === "1" &&
-                login.confirmPassword[1].text === "2" &&
-                login.confirmPassword[2].text === "3") {
+        if(controller.isThereUser(login.confirmPassword[0].text+","+
+                                  login.confirmPassword[1].text+","+
+                                  login.confirmPassword[2].text)){
             correctPass()
             stackView.pop();
         } else {

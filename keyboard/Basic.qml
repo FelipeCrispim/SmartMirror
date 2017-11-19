@@ -31,6 +31,7 @@ import QtQuick 2.0
 import QtQuick.VirtualKeyboard 2.1
 
 Rectangle {
+    signal enterKeyClicked()
     width: 800
     height: 480
     color: "transparent"
@@ -63,7 +64,7 @@ Rectangle {
                     width: parent.width
                     previewText: "Seu usuário"
                     enterKeyAction: EnterKeyAction.Next
-                    onEnterKeyClicked: stackView.pop()
+                    onEnterKeyClicked: enterKeyClicked()
                 }
             }
         }

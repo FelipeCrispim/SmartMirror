@@ -33,6 +33,7 @@ import QtQuick.VirtualKeyboard 2.2
 import QtQuick.VirtualKeyboard.Settings 2.2
 
 Item {
+    signal enterClicked()
     width: 800
     height: 480
 
@@ -48,6 +49,7 @@ Item {
             anchors.top: parent.top
             anchors.right: parent.right
             anchors.bottom: inputPanel.top
+            onEnterKeyClicked: enterClicked()
         }
 
         /*  Handwriting input panel for full screen handwriting input.

@@ -4,6 +4,7 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 import "Definitions.js" as Def
 import QtBluetooth 5.2
+import Controller 1.0
 
 Item {
     id: login
@@ -11,6 +12,11 @@ Item {
     property var password: new Array
     property var confirmPassword: new Array
     property alias text: labelBot.text
+
+    Controller {
+        id: controller
+    }
+
     SequentialAnimation {
         id: animation
         NumberAnimation { target: login; property: "x"; to: 20; duration: 100 }
@@ -30,8 +36,9 @@ Item {
         if(login.password[0].text === login.confirmPassword[0].text &&
                 login.password[1].text === login.confirmPassword[1].text &&
                 login.password[2].text === login.confirmPassword[2].text) {
+            controller.setNewUser(login.password[0].text+","+login.password[1].text+","+login.password[2].text)
             advanceSwipeView()
-            stackView.pop();
+
         } else {
             animation.running = true
             labelBot.text = "Senhas não conferem, digite-as novamente"

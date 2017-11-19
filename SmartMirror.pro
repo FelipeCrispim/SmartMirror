@@ -8,7 +8,8 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     networkmanager.cpp \
-    bluetoothmanager.cpp
+    bluetoothmanager.cpp \
+    controller.cpp
 
 RESOURCES += qml.qrc
 
@@ -37,4 +38,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     networkmanager.h \
     bluetoothmanager.h \
-    process.h
+    process.h \
+    controller.h
