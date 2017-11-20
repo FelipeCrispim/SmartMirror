@@ -3,7 +3,6 @@
 #include <QDebug>
 #include <QQmlContext>
 #include "networkmanager.h"
-#include "bluetoothmanager.h"
 #include "process.h"
 #include "controller.h"
 

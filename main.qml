@@ -28,6 +28,9 @@ ApplicationWindow {
     }
     Controller {
         id: controller
+        onHasUpdate: {
+            update.visible = true
+        }
     }
 
     Process {
@@ -45,7 +48,6 @@ ApplicationWindow {
         onTriggered: {
             btModel.running = false
             btModel.running = true
-
             if(btModel.savedUserFound == true){
                 blockScreen.visible = false
             } else {
@@ -57,7 +59,7 @@ ApplicationWindow {
 
     BluetoothDiscoveryModel {
         id: btModel
-        property bool savedUserFound: true
+        property bool savedUserFound: false
         running: false
         discoveryMode: BluetoothDiscoveryModel.DeviceDiscovery
         onDeviceDiscovered: {
@@ -71,7 +73,12 @@ ApplicationWindow {
     Component {
         id: introduction
         Introduction {
-            onFinishedSignup: btTimer.running = true
+            onFinishedSignupBluttoth: {
+                btTimer.running = true
+            }
+            onFinishedSignupDigit: {
+
+            }
         }
     }
 
@@ -200,26 +207,57 @@ ApplicationWindow {
             id: keypadPage
             ConfirmDigit {
                 onCorrectPass: {
+                    stackView.pop();
                 }
                 onNoPass: {
+                    btTimer.start();
                     blockScreen.visible = true
                 }
             }
         }
 
-
-        Image {
-            source: "qrc:/keypad.png"
+        Row {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
-            height: 52
-            width: 40
             anchors.margins: 5
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    stackView.push(keypadPage)
-                    blockScreen.visible = false
+            spacing: 10
+            Image {
+                source: "qrc:/keypad.png"
+                height: 50
+                width: 38
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        btModel.running = false;
+                        btTimer.stop();
+
+                        stackView.push(keypadPage)
+                        blockScreen.visible = false
+                    }
+                }
+            }
+            Image {
+                source: "qrc:/settings.png"
+                height: 50
+                width: 50
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log("")
+                    }
+                }
+            }
+            Image {
+                id: update
+                height: 50
+                width: 50
+                source: "qrc:/update.png"
+                visible: true
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+
+                    }
                 }
             }
         }

@@ -7,7 +7,9 @@ import "keyboard" as CustomKeyboard
 
 Item {
     id: rect
-    signal finishedSignup()
+    signal finishedSignupBluttoth()
+    signal finishedSignupDigit()
+    property bool signUpWithBluetooth
     Timer {
         id: timer
         interval: 1000; running: false; repeat: false;
@@ -21,7 +23,7 @@ Item {
         SettingsBluettoth {
             onAdvanceSwipeView: {
                 swipeView.currentIndex += 1
-//                finishedSignup()
+                signUpWithBluetooth = true
                 stackView.pop();
             }
         }
@@ -31,7 +33,8 @@ Item {
         id: settingsDigit
         SettingsDigit {
             onAdvanceSwipeView: {
-                swipeView.currentIndex += 1                
+                swipeView.currentIndex += 1
+                signUpWithBluetooth = false
                 stackView.pop();
             }
         }
@@ -94,7 +97,7 @@ Item {
                     height: 100
                     width: 200
                     onClicked: {
-                        bluetoothManager.registering(true);
+//                        bluetoothManager.registering(true);
                         stackView.push(settingsBluettoth)
                     }
                 }
@@ -154,7 +157,10 @@ Item {
             CustomKeyboard.Keyboard {
                 id: keyboard
                 onEnterClicked: {
-                    finishedSignup();
+                    if(signUpWithBluetooth)
+                        finishedSignupBluttoth();
+                    else
+                        finishedSignupDigit();
                     stackView.pop();
                 }
             }

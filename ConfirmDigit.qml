@@ -34,8 +34,7 @@ Item {
         if(controller.isThereUser(login.confirmPassword[0].text+","+
                                   login.confirmPassword[1].text+","+
                                   login.confirmPassword[2].text)){
-            correctPass()
-            stackView.pop();
+            correctPass();
         } else {
             animation.running = true
             labelBot.text = "Senha errada, digite-a novamente"

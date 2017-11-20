@@ -49,7 +49,7 @@ Item {
             anchors.top: parent.top
             anchors.right: parent.right
             anchors.bottom: inputPanel.top
-            onEnterKeyClicked: enterClicked()
+            onEnterTextFieldClicked: enterClicked()
         }
 
         /*  Handwriting input panel for full screen handwriting input.

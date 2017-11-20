@@ -1,0 +1,18 @@
+commit 676cd803fda8c2ffcd26a0f8a8bf1d12006a334b
+Author: FelipeCrispim <fcc@ic.ufal.br>
+Date:   Sun Nov 19 11:12:13 2017 -0300
+
+    Changed settings bluettoth from c++ to qml
+
+ConfirmDigit.qml
+Introduction.qml
+SettingsBluettoth.qml
+SettingsDigit.qml
+SmartMirror.pro
+SmartMirror.pro.user
+controller.cpp
+controller.h
+keyboard/Basic.qml
+keyboard/Keyboard.qml
+main.cpp
+main.qml

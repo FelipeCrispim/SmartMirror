@@ -12,12 +12,16 @@ public:
     Q_INVOKABLE bool setNewUser(QString info);
     Q_INVOKABLE bool isThereUser(QString user);
     Q_INVOKABLE bool firstTimeApp();
+    Q_INVOKABLE void updateApp();
+
 private:
     QSettings m_settings;
 
 signals:
+    void hasUpdate();
 
 public slots:
+    void onCheckGitVersion();
 };
 
 #endif // CONTROLLER_H
