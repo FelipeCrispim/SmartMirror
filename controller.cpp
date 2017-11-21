@@ -4,7 +4,7 @@
 #include <QProcess>
 #include <QDir>
 
-QString pathToProject = "/Users/felipecrispim/dev/Qt-workspace/smart_mirror";
+QString pathToProject = "/media/smart_mirror";
 QString lastVersionInGit; //Versao no repositorio
 QTimer *timerGit;
 
@@ -75,7 +75,7 @@ void Controller::updateApp()
 {
     QString command = "cd "+pathToProject+" && git pull && " +
             "cd .. && cp -r smart_mirror "+QDir::tempPath()+" && "
-            "cd "+QDir::tempPath()+"/smart_mirror && qmake && make";
+            "cd "+QDir::tempPath()+"/smart_mirror && qmake && make && cp smart_mirror /usr/bin && reboot";
     system(command.toLatin1());
 
     command = "cd "+pathToProject+" && git show --name-only >"+QDir::tempPath()+"/tempSmartMirror.txt";

@@ -12,9 +12,9 @@ public:
     Process(QObject *parent = 0) : QProcess(parent) { }
 
     Q_INVOKABLE void start(const QString &program, const QVariantList &arguments) {
-        QString filename1 = QString("/Users/felipecrispim/dev/Qt-workspace/smart_mirror/twitter/twitter_time_line.py");
+        QString filename1 = QString("/media/smart_mirror/twitter/twitter_time_line.py");
         QString filename2 = QString("p_pedrinhu");
-        QString filename3 = QString("/Users/felipecrispim/dev/Qt-workspace/smart_mirror/twitter/");
+        QString filename3 = QString("/media/smart_mirror/twitter/");
         QString cmd_qt = QString("python %1 %2 %3").arg(filename1).arg(filename2).arg(filename3);
         qDebug()<<cmd_qt;
         const char* cmd = cmd_qt.toLocal8Bit().constData();
