@@ -5,13 +5,14 @@ import QtPositioning 5.3
 import QtBluetooth 5.2
 import Process 1.0
 import Controller 1.0
+import "Definitions.js" as Def
 
 ApplicationWindow {
     id: root
     visible: true
     width: 800
     height: 480
-    title: qsTr("Hello World")
+    title: qsTr("Smart Mirror")
     property int dayInWeek: 7
     property int date: 0
     property int hours: 0
@@ -28,7 +29,9 @@ ApplicationWindow {
     }
     Controller {
         id: controller
+        property string commit: ""
         onHasUpdate: {
+            controller.commit = commit
             update.visible = true
         }
     }
@@ -186,7 +189,7 @@ ApplicationWindow {
                     Label {
                         id: tempLbl
                         text: "15º"
-                        font.pixelSize: 38
+                        font: Qt.font({ pixelSize: 38, family: Def.standardizedFontFamily(), weight: Font.Bold })
                         //                        verticalAlignment: parent.verticalCenter
                         //                        bottomPadding: 15
                     }
@@ -216,6 +219,13 @@ ApplicationWindow {
             }
         }
 
+        Component {
+            id: updatePageComponent
+            UpdatePage{
+                id: updatePage
+            }
+        }
+
         Row {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
@@ -237,26 +247,20 @@ ApplicationWindow {
                 }
             }
             Image {
-                source: "qrc:/settings.png"
-                height: 50
-                width: 50
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        console.log("")
-                    }
-                }
-            }
-            Image {
                 id: update
                 height: 50
                 width: 50
                 source: "qrc:/update.png"
-                visible: true
+                visible: false
+
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-
+                        btModel.running = false;
+                        btTimer.stop();
+                        stackView.push(Qt.resolvedUrl("UpdatePage.qml"),{commit:controller.commit})
+//                        updatePage.commit = "cor,tamanho,fonte"//controller.commit
+                        blockScreen.visible = false
                     }
                 }
             }

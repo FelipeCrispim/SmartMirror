@@ -18,7 +18,7 @@ private:
     QSettings m_settings;
 
 signals:
-    void hasUpdate();
+    void hasUpdate(QString commit);
 
 public slots:
     void onCheckGitVersion();
