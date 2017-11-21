@@ -19,6 +19,7 @@ ApplicationWindow {
     property int minutes: 0
     property int seconds: 0
     Component.onCompleted: {
+        root.getWeather()
         root.timeChanged()
         if(controller.firstTimeApp() == true)
             stackView.push(introduction)
@@ -41,7 +42,7 @@ ApplicationWindow {
         Component.onCompleted: {
             var command = "/Users/felipecrispim/dev/Qt-workspace/smart_mirror/twitter/twitter_time_line.py" +
                     " p_pedrinhu " + "/Users/felipecrispim/dev/Qt-workspace/smart_mirror/twitter/"
-            //            process.start("python", command)
+                        process.start("python", command)
         }
         onAnswer: ttLabel.text = ans;
     }
@@ -66,6 +67,7 @@ ApplicationWindow {
         running: false
         discoveryMode: BluetoothDiscoveryModel.DeviceDiscovery
         onDeviceDiscovered: {
+            console.log(device)
             if(controller.isThereUser(device)){
                 savedUserFound = true
             }
@@ -78,9 +80,12 @@ ApplicationWindow {
         Introduction {
             onFinishedSignupBluttoth: {
                 btTimer.running = true
+                iconGetOut.visible = false
+                animator.start()
             }
             onFinishedSignupDigit: {
-
+                iconGetOut.visible = true
+                animator.start()
             }
         }
     }
@@ -88,9 +93,8 @@ ApplicationWindow {
     PositionSource {
         id: coord
     }
-    //    Component.onCompleted: getData()
     //http://api.wunderground.com/api/a43e3da295483298/conditions/q/-9,-35.7224.json
-    function getData() {
+    function getWeather() {
         var xmlhttp = new XMLHttpRequest();
         var url = "http://api.wunderground.com/api/a43e3da295483298/conditions/q/-9,-35.7224.json";
 
@@ -135,26 +139,23 @@ ApplicationWindow {
                 Label {
                     property var days: ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado",""]
                     text: days[root.dayInWeek]+", "+root.date
-                    font.pixelSize: 32
+                    font: Qt.font({ pixelSize: 32, family: Def.standardizedFontFamily()})
                 }
 
                 Row {
                     id: clock
                     Label {
                         text: root.hours
-                        font.pixelSize: 60
-                        font.bold: true
+                        font: Qt.font({ pixelSize: 60, family: Def.standardizedFontFamily(), weight: Font.Bold })
                     }
                     Label {
                         text: ":"
-                        font.pixelSize: 60
-                        font.bold: true
+                        font: Qt.font({ pixelSize: 60, family: Def.standardizedFontFamily(), weight: Font.Bold })
                         color: (root.seconds & 1) == 0? "transparent" : "white"
                     }
                     Label {
                         text: root.minutes
-                        font.pixelSize: 60
-                        font.bold: true
+                        font: Qt.font({ pixelSize: 60, family: Def.standardizedFontFamily(), weight: Font.Bold })
                     }
                 }
                 Label {
@@ -195,6 +196,43 @@ ApplicationWindow {
                     }
                 }
             }
+            Image {
+                id: iconGetOut
+                source: "qrc:/door.png"
+                visible: false
+                anchors.margins: 15
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                width: 30
+                height: 30
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        btModel.running = true
+                        btTimer.start();
+                        iconGetOut.visible = false
+                        blockScreen.visible = true
+                    }
+                }
+            }
+            Label {
+                id: welcomeLabel
+                text: {
+                    if(root.hours < 12) return "Bom dia, bem vindo!"
+                    else if(root.hours>=12 && root.hours <18) return "Boa tarde, bem vindo!"
+                    else return "Boa noite, bem vindo!"
+                }
+                OpacityAnimator {
+                    id: animator
+                    target: welcomeLabel;
+                    from: 1
+                    to: 0
+                    running: false
+                    duration: 2000
+                }
+                anchors.centerIn: parent
+                font: Qt.font({ pixelSize: 38, family: Def.standardizedFontFamily()})
+            }
 
         }
 
@@ -210,6 +248,8 @@ ApplicationWindow {
             id: keypadPage
             ConfirmDigit {
                 onCorrectPass: {
+                    iconGetOut.visible = true
+                    animator.start()
                     stackView.pop();
                 }
                 onNoPass: {
@@ -281,24 +321,6 @@ ApplicationWindow {
         //        }
 
     }
-    OpacityAnimator {
-        id: animator
-        target: blockScreen;
-        running: false
-        duration: 2500
-        onStopped: welcomeLabel.visible = false
-    }
-    Label {
-        id: welcomeLabel
-        Component.onCompleted: console.log(welcomeLabel.text)
-        text: {
-            if(root.hours < 12) return "Bom dia!"
-            else if(root.hours>=12 && root.hours <18) return "Boa tarde!"
-            else return "Boa noite!"
-        }
-        anchors.centerIn: parent
-        font.pixelSize: 38
-        visible: false
-    }
+
 }
 

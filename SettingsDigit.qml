@@ -8,7 +8,7 @@ import Controller 1.0
 
 Item {
     id: login
-    signal advanceSwipeView()
+    signal advanceSwipeView(var user)
     property var password: new Array
     property var confirmPassword: new Array
     property alias text: labelBot.text
@@ -36,8 +36,7 @@ Item {
         if(login.password[0].text === login.confirmPassword[0].text &&
                 login.password[1].text === login.confirmPassword[1].text &&
                 login.password[2].text === login.confirmPassword[2].text) {
-            controller.setNewUser(login.password[0].text+","+login.password[1].text+","+login.password[2].text)
-            advanceSwipeView()
+            advanceSwipeView(login.password[0].text+","+login.password[1].text+","+login.password[2].text)
 
         } else {
             animation.running = true

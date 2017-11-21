@@ -24,6 +24,7 @@ Item {
             onAdvanceSwipeView: {
                 swipeView.currentIndex += 1
                 signUpWithBluetooth = true
+                controller.setNewUser(user)
                 stackView.pop();
             }
         }
@@ -35,6 +36,7 @@ Item {
             onAdvanceSwipeView: {
                 swipeView.currentIndex += 1
                 signUpWithBluetooth = false
+                controller.setNewUser(user)
                 stackView.pop();
             }
         }

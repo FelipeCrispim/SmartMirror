@@ -32,14 +32,20 @@ Item {
         height: 100
         width: 200
         onClicked: {
+            timer.start()
             updateButton.visible = false
             labelBot.visible = false
             labelCommit.visible = false
-//            controller.updateApp()
             back.visible = false
             rowCenter.visible = true
         }
     }
+    Timer {
+        id: timer
+        interval: 1000; running: false; repeat: false;
+        onTriggered: {controller.updateApp(); console.log("Atualizando")}
+    }
+
     Row {
         id: rowCenter
         visible: false

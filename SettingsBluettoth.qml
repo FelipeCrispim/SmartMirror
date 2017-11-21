@@ -8,7 +8,7 @@ import Controller 1.0
 
 Item {
     id: item
-    signal advanceSwipeView()
+    signal advanceSwipeView(var user)
 //    Component.onCompleted: bluetoothManager.startDiscovery()
     //    property var model: bluetoothManager.devicesList
     //    onModelChanged: {
@@ -20,13 +20,6 @@ Item {
         property bool savedDeviceFound: true
         running: true
         discoveryMode: BluetoothDiscoveryModel.DeviceDiscovery
-        onDeviceDiscovered: {
-            if(device == bluetoothManager.deviceBluetooth){
-                savedDeviceFound = true
-            }
-            console.log(device["name"])
-
-        }
     }
 
     Controller {
@@ -52,8 +45,8 @@ Item {
                 onClicked: {
 //                    var JsonObject = JSON.parse(modelData);
 //                    bluetoothManager.setDevice(JsonObject.address)
-                    controller.setNewUser(remoteAddress)
-                    advanceSwipeView()
+
+                    advanceSwipeView(remoteAddress)
                 }
             }
         }
