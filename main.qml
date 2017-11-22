@@ -21,7 +21,7 @@ ApplicationWindow {
     Component.onCompleted: {
         root.getWeather()
         root.timeChanged()
-        if(controller.firstTimeApp() == true)
+        if(controller.firstTimeApp() === true)
             stackView.push(introduction)
         else {
             blockScreen.visible = true
@@ -282,6 +282,21 @@ ApplicationWindow {
                         btTimer.stop();
 
                         stackView.push(keypadPage)
+                        blockScreen.visible = false
+                    }
+                }
+            }
+            Image {
+                source: "qrc:/addUser.png"
+                height: 50
+                width: 50
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        btModel.running = false;
+                        btTimer.stop();
+
+                        stackView.push(introduction)
                         blockScreen.visible = false
                     }
                 }

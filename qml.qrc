@@ -39,5 +39,6 @@
         <file>update.png</file>
         <file>UpdatePage.qml</file>
         <file>door.png</file>
+        <file>addUser.png</file>
     </qresource>
 </RCC>

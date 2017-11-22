@@ -116,6 +116,7 @@ Item {
         }
 
         Item {
+            visible: controller.firstTimeApp()
             Column {
                 anchors.centerIn: parent
                 spacing: 15
