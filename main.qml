@@ -1,7 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
-import QtPositioning 5.3
+import QtPositioning 5.0
 import QtBluetooth 5.2
 import Process 1.0
 import Controller 1.0
