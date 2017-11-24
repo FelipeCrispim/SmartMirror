@@ -4,7 +4,7 @@
 #include <QProcess>
 #include <QDir>
 
-QString pathToProject = "/media/smart_mirror";
+QString pathToProject = "/media/smartmirror2";
 QString lastVersionInGit; //Versao no repositorio
 QTimer *timerGit;
 
@@ -19,9 +19,10 @@ Controller::Controller(QObject *parent) : QObject(parent)
     if(!m_settings.contains("firstTime")){
         m_settings.setValue("firstTime", true);
 
+        QFile f(QDir::homePath()+"/test.txt");
+
         QString command = "cd "+pathToProject+" && git show --name-only >"+QDir::homePath()+"/test.txt";
         system(command.toLatin1());
-        QFile f(QDir::homePath()+"/test.txt");
         f.open(QFile::ReadOnly | QFile::Text);
         QTextStream in(&f);
         //in.readAll().remove("    ").split("\n").at(4);
@@ -74,8 +75,8 @@ void Controller::onCheckGitVersion()
 void Controller::updateApp()
 {
     QString command = "cd "+pathToProject+" && git pull && " +
-            "cd .. && cp -r smart_mirror "+QDir::tempPath()+" && "
-            "cd "+QDir::tempPath()+"/smart_mirror && qmake && make && cp smart_mirror /usr/bin && reboot";
+            "cd .. && cp -r smartmirror2 "+QDir::tempPath()+" && "
+            "cd "+QDir::tempPath()+"/smartmirror2 && qmake && make && cp smartmirror2 /usr/bin && reboot";
     system(command.toLatin1());
 
     command = "cd "+pathToProject+" && git show --name-only >"+QDir::tempPath()+"/tempSmartMirror.txt";
