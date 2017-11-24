@@ -40,8 +40,8 @@ ApplicationWindow {
     Process {
         id: process
         Component.onCompleted: {
-            var command = "/Users/felipecrispim/dev/Qt-workspace/smart_mirror/twitter/twitter_time_line.py" +
-                    " p_pedrinhu " + "/Users/felipecrispim/dev/Qt-workspace/smart_mirror/twitter/"
+            var command = "/Users/felipecrispim/dev/Qt-workspace/smartmirror2/twitter/twitter_time_line.py" +
+                    " p_pedrinhu " + "/Users/felipecrispim/dev/Qt-workspace/smartmirror2/twitter/"
                         process.start("python", command)
         }
         onAnswer: ttLabel.text = ans;
