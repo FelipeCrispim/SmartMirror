@@ -82,10 +82,12 @@ ApplicationWindow {
                 btTimer.running = true
                 iconGetOut.visible = false
                 animator.start()
+                root.getWeather()
             }
             onFinishedSignupDigit: {
                 iconGetOut.visible = true
                 animator.start()
+                root.getWeather()
             }
         }
     }
@@ -251,6 +253,7 @@ ApplicationWindow {
                     iconGetOut.visible = true
                     animator.start()
                     stackView.pop();
+                    root.getWeather()
                 }
                 onNoPass: {
                     btTimer.start();
