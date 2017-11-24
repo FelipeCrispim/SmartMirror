@@ -12,25 +12,25 @@ bool signUp = true;
 
 BluetoothManager::BluetoothManager(QObject *parent) : QObject(parent)
 {
-    //    QBluetoothLocalDevice localDevice;
+        QBluetoothLocalDevice localDevice;
     // Turn Bluetooth on
-    //    localDevice.powerOn();
+        localDevice.powerOn();
 
-    m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent(this);
-
-
-    connect(m_discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)),
-            this, SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
-    connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
-    connect(m_discoveryAgent, SIGNAL(canceled()), this, SLOT(scanCanceled()));
-
-//    startDiscovery();
-
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+//    m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent(this);
 
 
-    m_devicesList.clear();
+//    connect(m_discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)),
+//            this, SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
+//    connect(m_discoveryAgent, SIGNAL(finished()), this, SLOT(discoveryFinished()));
+//    connect(m_discoveryAgent, SIGNAL(canceled()), this, SLOT(scanCanceled()));
+
+////    startDiscovery();
+
+//    timer = new QTimer(this);
+//    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+
+
+//    m_devicesList.clear();
 }
 
 BluetoothManager::~BluetoothManager()

@@ -5,6 +5,7 @@
 #include "networkmanager.h"
 #include "process.h"
 #include "controller.h"
+#include "bluetoothmanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,7 +15,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     NetworkManager wifi;
-//    BluetoothManager bluetooth;
+    BluetoothManager bluetooth;
     Process myProcess;
 
     QQmlApplicationEngine engine;
