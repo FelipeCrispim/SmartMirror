@@ -28,7 +28,7 @@
 ****************************************************************************/
 
 import QtQuick 2.0
-import QtQuick.VirtualKeyboard 2.1
+import QtQuick.VirtualKeyboard 1.3
 import "../Definitions.js" as Def
 TextBase {
     id: textField
