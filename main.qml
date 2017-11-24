@@ -301,35 +301,35 @@ ApplicationWindow {
                     }
                 }
             }
-//            Image {
-//                id: update
-//                height: 50
-//                width: 50
-//                source: "qrc:/update.png"
-//                visible: false
-
-//                MouseArea {
-//                    anchors.fill: parent
-//                    onClicked: {
-//                        btModel.running = false;
-//                        btTimer.stop();
-//                        stackView.push(Qt.resolvedUrl("UpdatePage.qml"),{commit:controller.commit})
-////                        updatePage.commit = "cor,tamanho,fonte"//controller.commit
-//                        blockScreen.visible = false
-//                    }
-//                }
-//            }
-            Button {
+            Image {
                 id: update
-                text: "test"
-                onClicked: {
-                    btModel.running = false;
-                    btTimer.stop();
-                    stackView.push(Qt.resolvedUrl("UpdatePage.qml"),{commit:controller.commit})
+                height: 50
+                width: 50
+                source: "qrc:/update.png"
+                visible: false
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        btModel.running = false;
+                        btTimer.stop();
+                        stackView.push(Qt.resolvedUrl("UpdatePage.qml"),{commit:controller.commit})
 //                        updatePage.commit = "cor,tamanho,fonte"//controller.commit
-                    blockScreen.visible = false
+                        blockScreen.visible = false
+                    }
                 }
             }
+//            Button {
+//                id: update
+//                text: "test"
+//                onClicked: {
+//                    btModel.running = false;
+//                    btTimer.stop();
+//                    stackView.push(Qt.resolvedUrl("UpdatePage.qml"),{commit:controller.commit})
+////                        updatePage.commit = "cor,tamanho,fonte"//controller.commit
+//                    blockScreen.visible = false
+//                }
+//            }
         }
         //        function dark(){
         //            if(btModel.savedDeviceFound == true){
