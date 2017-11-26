@@ -17,7 +17,7 @@ Controller::Controller(QObject *parent) : QObject(parent)
 
     //    m_settings.clear();
     //    m_settings.setValue("123", "123");
-    m_settings.setValue("gitVersion", 123);
+//    m_settings.setValue("gitVersion", 123);
     if(!m_settings.contains("firstTime")){
         m_settings.setValue("firstTime", true);
 
@@ -70,7 +70,7 @@ void Controller::onCheckGitVersion()
         emit hasUpdate(version.remove("    ").split("\n").at(4));
         //        lastVersionInGit.clear();
         //        lastVersionInGit = version.split("\n").at(0).split(" ").at(1);
-        qDebug() << "different version git";
+        qDebug() << "different version git:" << version.remove("    ").split("\n").at(4);
 
     } else {
         qDebug() << __func__ << "same version git";
