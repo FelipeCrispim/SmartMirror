@@ -5,6 +5,7 @@ import QtPositioning 5.0
 import QtBluetooth 5.2
 import Process 1.0
 import Controller 1.0
+import QtQuick.Window 2.2
 import "Definitions.js" as Def
 
 ApplicationWindow {
@@ -12,6 +13,7 @@ ApplicationWindow {
     visible: true
     width: 800
     height: 480
+    visibility: "Maximized"
     title: qsTr("Smart Mirror")
     property int dayInWeek: 7
     property int date: 0
@@ -19,7 +21,7 @@ ApplicationWindow {
     property int minutes: 0
     property int seconds: 0
     Component.onCompleted: {
-        root.getWeather()
+        //root.getWeather()
         root.timeChanged()
         if(controller.firstTimeApp() === true)
             stackView.push(introduction)
@@ -82,12 +84,12 @@ ApplicationWindow {
                 btTimer.running = true
                 iconGetOut.visible = false
                 animator.start()
-                root.getWeather()
+                //root.getWeather()
             }
             onFinishedSignupDigit: {
                 iconGetOut.visible = true
                 animator.start()
-                root.getWeather()
+                //root.getWeather()
             }
         }
     }
@@ -156,7 +158,15 @@ ApplicationWindow {
                         color: (root.seconds & 1) == 0? "transparent" : "white"
                     }
                     Label {
-                        text: root.minutes
+                        text: {
+                            if(root.minutes < 10){
+                                return "0"+root.minutes
+                            } else {
+                                return root.minutes
+                            }
+
+
+                        }
                         font: Qt.font({ pixelSize: 60, family: Def.standardizedFontFamily(), weight: Font.Bold })
                     }
                 }
@@ -205,8 +215,8 @@ ApplicationWindow {
                 anchors.margins: 15
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                width: 30
-                height: 30
+                width: Screen.pixelDensity*14
+                height: Screen.pixelDensity*14
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -253,7 +263,7 @@ ApplicationWindow {
                     iconGetOut.visible = true
                     animator.start()
                     stackView.pop();
-                    root.getWeather()
+                    //root.getWeather()
                 }
                 onNoPass: {
                     btTimer.start();
@@ -276,8 +286,8 @@ ApplicationWindow {
             spacing: 10
             Image {
                 source: "qrc:/keypad.png"
-                height: 50
-                width: 38
+                height: Screen.pixelDensity*14
+                width: Screen.pixelDensity*13
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -291,8 +301,8 @@ ApplicationWindow {
             }
             Image {
                 source: "qrc:/addUser.png"
-                height: 50
-                width: 50
+                height: Screen.pixelDensity*14
+                width: Screen.pixelDensity*14
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -306,8 +316,8 @@ ApplicationWindow {
             }
             Image {
                 id: update
-                height: 50
-                width: 50
+                height: Screen.pixelDensity*14
+                width: Screen.pixelDensity*14
                 source: "qrc:/update.png"
                 visible: false
 

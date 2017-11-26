@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Window 2.2
 import "keyboard" as CustomKeyboard
 
 Item {
@@ -10,12 +11,9 @@ Item {
     signal finishedSignupBluttoth()
     signal finishedSignupDigit()
     property bool signUpWithBluetooth
-    Timer {
-        id: timer
-        interval: 1000; running: false; repeat: false;
-        onTriggered: {
-            stackView.pop();
-        }
+    property int labelPixelSize: (rect.width*0.15)*0.25
+    Component.onCompleted: {
+        console.log("ratio", Screen.pixelDensity)
     }
 
     Component {
@@ -46,12 +44,12 @@ Item {
         bottomPadding: 5
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font: Qt.font({ pixelSize: 30, family: "Serif", weight: Font.Bold })
+        font: Qt.font({ pixelSize: rect.labelPixelSize, family: "Serif", weight: Font.Bold })
         text: {
             if(swipeView.currentIndex == 0)
                 "Defina um tipo de desbloqueio"
-            else if(swipeView.currentIndex == 1)
-                "Conecte-nos ao seu wifi"
+            //            else if(swipeView.currentIndex == 1)
+            //                "Conecte-nos ao seu wifi"
             else
                 "Forneça seu usuário do twitter"
         }
@@ -94,20 +92,21 @@ Item {
                 anchors.centerIn: parent
                 spacing: 10
                 Button {
+                    id: button
                     text: "Bluetooth"
-                    font: Qt.font({ pixelSize: 30, family: "Serif", weight: Font.Bold })
-                    height: 100
-                    width: 200
+                    font: Qt.font({ pixelSize: rect.labelPixelSize, family: "Serif", weight: Font.Bold })
+                    height: rect.width*0.15
+                    width: rect.width*0.25
                     onClicked: {
-//                        bluetoothManager.registering(true);
+                        //                        bluetoothManager.registering(true);
                         stackView.push(settingsBluettoth)
                     }
                 }
                 Button {
                     text: "3 dígitos"
-                    font: Qt.font({ pixelSize: 30, family: "Serif", weight: Font.Bold })
-                    height: 100
-                    width: 200
+                    font: Qt.font({ pixelSize: rect.labelPixelSize, family: "Serif", weight: Font.Bold })
+                    height: rect.width*0.15
+                    width: rect.width*0.25
                     onClicked: {
                         stackView.push(settingsDigit)
                     }
@@ -115,48 +114,48 @@ Item {
             }
         }
 
-        Item {
-            visible: controller.firstTimeApp()
-            Column {
-                anchors.centerIn: parent
-                spacing: 15
-                Label {
-                    text: "Selecione sua rede"
-                    font.weight: Font.Bold
-                    anchors.horizontalCenter: parent.horizontalCenter
-                }
+        //        Item {
+        //            visible: false
+        //            Column {
+        //                anchors.centerIn: parent
+        //                spacing: 15
+        //                Label {
+        //                    text: "Selecione sua rede"
+        //                    font.weight: Font.Bold
+        //                    anchors.horizontalCenter: parent.horizontalCenter
+        //                }
 
-                ComboBox {
-                    id: wifiComboBox
-                    objectName: "wifiComboBox"
-                    model: networkManager.comboList
-                    width: root.width/2
-                }
-                TextField {
-                    id: textField1
-                    placeholderText: qsTr("Senha da rede")
-                    width: root.width/2
-                }
-                Button {
-                    text: "Conectar"
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    onClicked: {
-                        stackView.pop();
-                        //swipeView.currentIndex += 1
-                    }
-                }
-            }
-        }
+        //                ComboBox {
+        //                    id: wifiComboBox
+        //                    objectName: "wifiComboBox"
+        //                    model: networkManager.comboList
+        //                    width: root.width/2
+        //                }
+        //                TextField {
+        //                    id: textField1
+        //                    placeholderText: qsTr("Senha da rede")
+        //                    width: root.width/2
+        //                }
+        //                Button {
+        //                    text: "Conectar"
+        //                    anchors.horizontalCenter: parent.horizontalCenter
+        //                    onClicked: {
+        //                        stackView.pop();
+        //                        //swipeView.currentIndex += 1
+        //                    }
+        //                }
+        //            }
+        //        }
         Item {
             Image {
                 id: twitter
-                source: "qrc:/twitter/twitter.png"
-                height: 42
-                width: 50
+                source: "qrc:/twitter/twitter-logo.svg"
+                height: parent.height*0.1
+                width: parent.height*0.1
                 anchors.horizontalCenter: parent.horizontalCenter
-                y: 80
-//                anchors.bottom: keyboard.top
+                y: keyboard.textFieldY-parent.height*0.14
             }
+
             CustomKeyboard.Keyboard {
                 id: keyboard
                 onEnterClicked: {
@@ -167,7 +166,6 @@ Item {
                     stackView.pop();
                 }
             }
-
         }
     }
 }

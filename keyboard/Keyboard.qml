@@ -33,9 +33,11 @@ import QtQuick.VirtualKeyboard 2.0
 //import QtQuick.VirtualKeyboard.Settings 2.2
 
 Item {
+    id: root
+    property alias textFieldY: virtualKeyboard.getY
     signal enterClicked()
-    width: 800
-    height: 480
+    width: parent.width//800
+    height: parent.height// 480
 
     Item {
         id: appContainer
@@ -43,6 +45,7 @@ Item {
         height: Screen.width < Screen.height ? parent.width : parent.height
         anchors.centerIn: parent
         rotation: Screen.width < Screen.height ? 90 : 0
+
         Basic {
             id: virtualKeyboard
             anchors.left: parent.left
@@ -128,7 +131,7 @@ Item {
                 from: ""
                 to: "visible"
                 reversible: true
-                enabled: !VirtualKeyboardSettings.fullScreenMode
+//                enabled: !VirtualKeyboardSettings.fullScreenMode
                 ParallelAnimation {
                     NumberAnimation {
                         properties: "y"
@@ -145,10 +148,10 @@ Item {
             AutoScroller {}
         }
 
-        Binding {
-            target: VirtualKeyboardSettings
-            property: "fullScreenMode"
-            value: appContainer.height > 0 && (appContainer.width / appContainer.height) > (16.0 / 9.0)
-        }
+//        Binding {
+//            target: VirtualKeyboardSettings
+//            property: "fullScreenMode"
+//            value: appContainer.height > 0 && (appContainer.width / appContainer.height) > (16.0 / 9.0)
+//        }
     }
 }

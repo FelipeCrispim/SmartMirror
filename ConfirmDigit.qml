@@ -4,6 +4,7 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 import "Definitions.js" as Def
 import Controller 1.0
+import QtQuick.Window 2.2
 
 Item {
     id: login
@@ -11,6 +12,7 @@ Item {
     signal noPass()
     property var confirmPassword: new Array
     property alias text: labelBot.text
+    property int labelPixelSize: Screen.pixelDensity*10
 
     Controller{
         id: controller
@@ -44,16 +46,16 @@ Item {
     GridView {
         id: gridButton
         model: ["7", "8", "9", "4", "5", "6", "1", "2", "3", "", "0", ""]
-        height: 400
-        width: 300
+        height: Screen.pixelDensity*128
+        width: Screen.pixelDensity*102
         anchors.centerIn: parent
-        cellWidth: 100; cellHeight: 100
+        cellWidth: Screen.pixelDensity*32; cellHeight: Screen.pixelDensity*32
         interactive: false
 
         delegate:  Button {
             id: digitButton
 
-            width: 80; height: 80
+            width: Screen.pixelDensity*24; height: Screen.pixelDensity*24
             visible: modelData != ""? true : false
             text: modelData
             highlighted: false
@@ -75,7 +77,7 @@ Item {
                     digitButton.highlighted = false
                 }
             }
-            font: Qt.font({ family: "Serif", pointSize: 24, weight: Font.Bold })
+            font: Qt.font({ family: "Serif", pointSize: login.labelPixelSize*0.9, weight: Font.Bold })
             background: Rectangle {
                 id: backgroundButton
 
@@ -93,15 +95,15 @@ Item {
         anchors.bottom: parent.bottom
         bottomPadding: 5
         text: "Digite sua senha"
-        font: Qt.font({ pixelSize: 30, family: Def.standardizedFontFamily(), weight: Font.Bold })
+        font: Qt.font({ pixelSize: login.labelPixelSize-1, family: Def.standardizedFontFamily(), weight: Font.Bold })
     }
     Image {
         source: "qrc:/back.png"
         anchors.leftMargin: 5
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        width: 50
-        height: 50
+        width: Screen.pixelDensity*14
+        height: Screen.pixelDensity*14
         MouseArea {
             anchors.fill: parent
             onClicked: {

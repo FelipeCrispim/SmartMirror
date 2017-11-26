@@ -40,5 +40,7 @@
         <file>UpdatePage.qml</file>
         <file>door.png</file>
         <file>addUser.png</file>
+        <file>twitter/twitter.svg</file>
+        <file>twitter/twitter-logo.svg</file>
     </qresource>
 </RCC>

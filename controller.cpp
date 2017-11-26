@@ -4,7 +4,7 @@
 #include <QProcess>
 #include <QDir>
 
-QString pathToProject = "/media/smartmirror2";
+QString pathToProject = "/Users/felipecrispim/smartmirror2";
 QString lastVersionInGit; //Versao no repositorio
 QTimer *timerGit;
 

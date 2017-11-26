@@ -32,8 +32,9 @@ import QtQuick.VirtualKeyboard 1.3
 
 Rectangle {
     signal enterTextFieldClicked()
-    width: 800
-    height: 480
+    property alias getY: textEditors.y
+    width: parent.width
+    height: parent.height
     color: "transparent"
 
     Flickable {
@@ -58,8 +59,10 @@ Rectangle {
             Column {
                 id: textEditors
                 spacing: 15
-                x: 150; y: 150
-                width: 500
+//                x: 150;
+                y: 150
+                width: parent.width*0.75
+                anchors.horizontalCenter: parent.horizontalCenter
                 TextField {
                     width: parent.width
                     previewText: "Seu usuário"
