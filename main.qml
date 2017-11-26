@@ -273,7 +273,7 @@ ApplicationWindow {
         id: blockScreen
         property bool blackScreen: false
         anchors.fill: parent
-        color: "green"
+        color: "blue"
         opacity: 1
         visible: false
         Component {

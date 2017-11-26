@@ -51,49 +51,44 @@ bool Controller::isThereUser(QString user)
 
 bool Controller::firstTimeApp()
 {
-    //returns if it's first time that the app is open
+    //returns if it's first time that the app is openned
     return m_settings.value("firstTime").toBool();
 }
 
 void Controller::onCheckGitVersion()
 {
-    QString command = "cd "+pathToProject+" && git show --name-only >"+QDir::tempPath()+"/tempSmartMirror.txt";
+    QString command = "> "+QDir::tempPath()+"/tempSmartMirror.txt &&"+"cd "+pathToProject+" && git pull >"+QDir::tempPath()+"/tempSmartMirror.txt";
     system(command.toLatin1());
     QFile f(QDir::tempPath()+"/tempSmartMirror.txt");
     f.open(QFile::ReadOnly | QFile::Text);
     QTextStream in(&f);
     QString version = in.readAll();
-
-    //    qDebug() << version.split("\n").at(0).split(" ").at(1);
     f.close();
-    if(version.split("\n").at(0).split(" ").at(1) != m_settings.value("gitVersion").toString()){
-        emit hasUpdate(version.remove("    ").split("\n").at(4));
-        //        lastVersionInGit.clear();
-        //        lastVersionInGit = version.split("\n").at(0).split(" ").at(1);
-        qDebug() << "different version git:" << version.remove("    ").split("\n").at(4);
 
+    if(version != "Already up-to-date.\n"){
+        QString command = "> "+QDir::tempPath()+"/tempSmartMirror.txt &&"+"cd "+pathToProject+" && git log -1 >"+QDir::tempPath()+"/tempSmartMirror.txt";
+        system(command.toLatin1());
+        QFile f(QDir::tempPath()+"/tempSmartMirror.txt");
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream in(&f);
+        QString lastestCommit = in.readAll().remove("    ").split("\n").at(4);
+        f.close();
+        emit hasUpdate(lastestCommit);
     } else {
-        qDebug() << __func__ << "same version git";
+        qDebug() << __func__ << "Already up-to-date.";
     }
 }
 
 void Controller::updateApp()
 {
     timerGit->stop();
-    QString command = "cd "+pathToProject+" && git pull && " +
+    QString command = "cd "+pathToProject+" && " +
             "cd .. && cp -r smartmirror2 "+QDir::tempPath()+" && "
-                                                            "cd "+QDir::tempPath()+"/smartmirror2 && qmake && make && cp smartmirror2 /usr/bin && reboot";
+            "cd "+QDir::tempPath()+"/smartmirror2 && qmake && make && cp smartmirror2 /usr/bin";
     system(command.toLatin1());
 
-    command = "cd "+pathToProject+" && git show --name-only >"+QDir::tempPath()+"/tempSmartMirror.txt";
-    system(command.toLatin1());
-    QFile f(QDir::tempPath()+"/tempSmartMirror.txt");
-    f.open(QFile::ReadOnly | QFile::Text);
-    QTextStream in(&f);
-    QString version = in.readAll();
-
-    m_settings.setValue("gitVersion", version.split("\n").at(0).split(" ").at(1));
-    m_settings.sync();
+//    m_settings.setValue("gitVersion", version.split("\n").at(0).split(" ").at(1));
+//    m_settings.sync();
     timerGit->start();
 }
 
