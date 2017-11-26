@@ -266,7 +266,6 @@ ApplicationWindow {
             //                anchors.centerIn: parent
             //                font: Qt.font({ pixelSize: 38, family: Def.standardizedFontFamily()})
             //            }
-
         }
 
     }
