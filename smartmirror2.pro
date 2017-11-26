@@ -1,4 +1,4 @@
-QT += qml quick network bluetooth positioning core
+QT += qml quick network bluetooth positioning core texttospeech
 static {
     QT += svg
     QTPLUGIN += qtvirtualkeyboardplugin
@@ -9,7 +9,8 @@ CONFIG += c++11
 SOURCES += main.cpp \
     networkmanager.cpp \
     bluetoothmanager.cpp \
-    controller.cpp
+    controller.cpp \
+    speech.cpp
 
 RESOURCES += qml.qrc
 
@@ -39,4 +40,5 @@ HEADERS += \
     networkmanager.h \
     bluetoothmanager.h \
     process.h \
-    controller.h
+    controller.h \
+    speech.h

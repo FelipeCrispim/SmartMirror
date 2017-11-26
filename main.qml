@@ -1,7 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
-import QtPositioning 5.0
+import QtPositioning 5.2
 import QtBluetooth 5.2
 import Process 1.0
 import Controller 1.0
@@ -20,8 +20,9 @@ ApplicationWindow {
     property int hours: 0
     property int minutes: 0
     property int seconds: 0
+    property string kindOfWeather: "mostlycloudy"
     Component.onCompleted: {
-        //root.getWeather()
+//        root.getWeather()
         root.timeChanged()
         if(controller.firstTimeApp() === true)
             stackView.push(introduction)
@@ -29,7 +30,20 @@ ApplicationWindow {
             blockScreen.visible = true
             btTimer.start()
         }
+//        console.log(location.position.coordinate.latitude)
     }
+    PositionSource {
+        id: position
+        active: true
+        property string latitude
+        property string longitude
+        onPositionChanged: {
+            var coord = position.position.coordinate;
+            position.latitude = coord.latitude
+            position.longitude = coord.longitude
+        }
+    }
+
     Controller {
         id: controller
         property string commit: ""
@@ -42,9 +56,9 @@ ApplicationWindow {
     Process {
         id: process
         Component.onCompleted: {
-            var command = "/Users/felipecrispim/dev/Qt-workspace/smartmirror2/twitter/twitter_time_line.py" +
-                    " p_pedrinhu " + "/Users/felipecrispim/dev/Qt-workspace/smartmirror2/twitter/"
-                        process.start("python", command)
+//            var command = "/Users/felipecrispim/dev/Qt-workspace/smartmirror2/twitter/twitter_time_line.py" +
+//                    " p_pedrinhu " + "/Users/felipecrispim/dev/Qt-workspace/smartmirror2/twitter/"
+//                        process.start("python", command)
         }
         onAnswer: ttLabel.text = ans;
     }
@@ -83,12 +97,12 @@ ApplicationWindow {
             onFinishedSignupBluttoth: {
                 btTimer.running = true
                 iconGetOut.visible = false
-                animator.start()
+//                animator.start()
                 //root.getWeather()
             }
             onFinishedSignupDigit: {
                 iconGetOut.visible = true
-                animator.start()
+//                animator.start()
                 //root.getWeather()
             }
         }
@@ -100,7 +114,7 @@ ApplicationWindow {
     //http://api.wunderground.com/api/a43e3da295483298/conditions/q/-9,-35.7224.json
     function getWeather() {
         var xmlhttp = new XMLHttpRequest();
-        var url = "http://api.wunderground.com/api/a43e3da295483298/conditions/q/-9,-35.7224.json";
+        var url = "http://api.wunderground.com/api/a43e3da295483298/conditions/q/"+position.latitude+","+position.longitude+".json";
 
         xmlhttp.onreadystatechange=function() {
             if (xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status == 200) {
@@ -128,6 +142,7 @@ ApplicationWindow {
         //        console.log("teste", JSON.parse(response).current_observation.temp_c);
         tempLbl.text = JSON.parse(response).current_observation.temp_c + "º"
         tempIcon.source = JSON.parse(response).current_observation.icon_url
+        root.kindOfWeather = JSON.parse(response).current_observation.icon
     }
     StackView {
         id: stackView
@@ -201,7 +216,7 @@ ApplicationWindow {
                     }
                     Label {
                         id: tempLbl
-                        text: "15º"
+                        text: "00"
                         font: Qt.font({ pixelSize: 38, family: Def.standardizedFontFamily(), weight: Font.Bold })
                         //                        verticalAlignment: parent.verticalCenter
                         //                        bottomPadding: 15
@@ -224,27 +239,28 @@ ApplicationWindow {
                         btTimer.start();
                         iconGetOut.visible = false
                         blockScreen.visible = true
+                        speech.sayGoodBye()
                     }
                 }
             }
-            Label {
-                id: welcomeLabel
-                text: {
-                    if(root.hours < 12) return "Bom dia, bem vindo!"
-                    else if(root.hours>=12 && root.hours <18) return "Boa tarde, bem vindo!"
-                    else return "Boa noite, bem vindo!"
-                }
-                OpacityAnimator {
-                    id: animator
-                    target: welcomeLabel;
-                    from: 1
-                    to: 0
-                    running: false
-                    duration: 2000
-                }
-                anchors.centerIn: parent
-                font: Qt.font({ pixelSize: 38, family: Def.standardizedFontFamily()})
-            }
+//            Label {
+//                id: welcomeLabel
+//                text: {
+//                    if(root.hours < 12) return "Bom dia, bem vindo!"
+//                    else if(root.hours>=12 && root.hours <18) return "Boa tarde, bem vindo!"
+//                    else return "Boa noite, bem vindo!"
+//                }
+//                OpacityAnimator {
+//                    id: animator
+//                    target: welcomeLabel;
+//                    from: 1
+//                    to: 0
+//                    running: false
+//                    duration: 2000
+//                }
+//                anchors.centerIn: parent
+//                font: Qt.font({ pixelSize: 38, family: Def.standardizedFontFamily()})
+//            }
 
         }
 
@@ -261,9 +277,10 @@ ApplicationWindow {
             ConfirmDigit {
                 onCorrectPass: {
                     iconGetOut.visible = true
-                    animator.start()
+//                    animator.start()
                     stackView.pop();
                     //root.getWeather()
+                    speech.say(root.hours, root.kindOfWeather)
                 }
                 onNoPass: {
                     btTimer.start();

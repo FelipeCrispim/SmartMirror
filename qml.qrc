@@ -20,11 +20,6 @@
         <file>keyboard/Basic.qml</file>
         <file>keyboard/TextBase.qml</file>
         <file>keyboard/TextField.qml</file>
-        <file>bluetoothmanager.cpp</file>
-        <file>bluetoothmanager.h</file>
-        <file>main.cpp</file>
-        <file>networkmanager.cpp</file>
-        <file>networkmanager.h</file>
         <file>keyboard/Keyboard.qml</file>
         <file>keyboard/HandwritingModeButton.qml</file>
         <file>keyboard/AutoScroller.qml</file>

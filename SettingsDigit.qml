@@ -4,7 +4,6 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 import "Definitions.js" as Def
 import QtBluetooth 5.2
-import Controller 1.0
 import QtQuick.Window 2.2
 
 Item {
@@ -15,10 +14,6 @@ Item {
     property alias text: labelBot.text
     property int labelPixelSize: Screen.pixelDensity*10
 //    Component.onCompleted: console.log((login.width*0.15)*0.25)
-
-    Controller {
-        id: controller
-    }
 
     SequentialAnimation {
         id: animation

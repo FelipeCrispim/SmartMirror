@@ -3,6 +3,7 @@
 #include <QTimer>
 #include <QProcess>
 #include <QDir>
+#include "speech.h"
 
 QString pathToProject = "/Users/felipecrispim/smartmirror2";
 QString lastVersionInGit; //Versao no repositorio
@@ -15,7 +16,7 @@ Controller::Controller(QObject *parent) : QObject(parent)
     timerGit->start(10000);
 
 //    m_settings.clear();
-//    m_settings.setValue("FC:8F:90:48:45:C1", "FC:8F:90:48:45:C1");
+//    m_settings.setValue("123", "123");
     if(!m_settings.contains("firstTime")){
         m_settings.setValue("firstTime", true);
 
@@ -27,6 +28,9 @@ Controller::Controller(QObject *parent) : QObject(parent)
         QTextStream in(&f);
         //in.readAll().remove("    ").split("\n").at(4);
         m_settings.setValue("gitVersion", in.readAll().split("\n").at(0).split(" ").at(1));
+        Speech speech;
+        speech.sayWelcome();
+        qDebug() << "welcome";
     } else {
         m_settings.setValue("firstTime", false);
     }
@@ -59,7 +63,7 @@ void Controller::onCheckGitVersion()
     QTextStream in(&f);
     QString version = in.readAll();
 
-
+//    qDebug() << version.split("\n").at(0).split(" ").at(1);
     f.close();
     if(version.split("\n").at(0).split(" ").at(1) != m_settings.value("gitVersion").toString()){
         emit hasUpdate(version.remove("    ").split("\n").at(4));

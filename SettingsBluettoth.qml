@@ -4,7 +4,6 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 import "Definitions.js" as Def
 import QtBluetooth 5.2
-import Controller 1.0
 
 Item {
     id: item
@@ -20,10 +19,6 @@ Item {
         property bool savedDeviceFound: true
         running: true
         discoveryMode: BluetoothDiscoveryModel.DeviceDiscovery
-    }
-
-    Controller {
-        id: controller
     }
 
     ListView {
