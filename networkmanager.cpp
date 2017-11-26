@@ -45,5 +45,7 @@ bool NetworkManager::isOnline()
     QNetworkConfigurationManager mgr;
     QNetworkConfiguration ap = mgr.defaultConfiguration();
     QNetworkSession *session = new QNetworkSession(ap);
+    Q_UNUSED(session);
+    return true;
 //    qDebug() << session->is;
 }

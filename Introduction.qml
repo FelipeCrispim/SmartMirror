@@ -95,8 +95,8 @@ Item {
                     id: button
                     text: "Bluetooth"
                     font: Qt.font({ pixelSize: rect.labelPixelSize, family: "Serif", weight: Font.Bold })
-                    height: rect.width*0.15
-                    width: rect.width*0.25
+                    height: Screen.pixelDensity*41
+                    width: Screen.pixelDensity*68
                     onClicked: {
                         //                        bluetoothManager.registering(true);
                         stackView.push(settingsBluettoth)
@@ -105,8 +105,8 @@ Item {
                 Button {
                     text: "3 dígitos"
                     font: Qt.font({ pixelSize: rect.labelPixelSize, family: "Serif", weight: Font.Bold })
-                    height: rect.width*0.15
-                    width: rect.width*0.25
+                    height: Screen.pixelDensity*41
+                    width: Screen.pixelDensity*68
                     onClicked: {
                         stackView.push(settingsDigit)
                     }

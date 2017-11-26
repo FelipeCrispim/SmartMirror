@@ -4,10 +4,12 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 import "Definitions.js" as Def
 import Controller 1.0
+import QtQuick.Window 2.2
 
 Item {
     id: login
     property string commit: ""
+    property int labelPixelSize: Screen.pixelDensity*10
     onCommitChanged: {
         var commits = login.commit.split(",")
         for(var i = 0; i<login.commit.split(",").length; i++){
@@ -29,8 +31,8 @@ Item {
         text: "Atualizar"
         anchors.centerIn: parent
         font: Qt.font({ pixelSize: 30, family: Def.standardizedFontFamily(), weight: Font.Bold })
-        height: 100
-        width: 200
+        height: Screen.pixelDensity*41
+        width: Screen.pixelDensity*68
         onClicked: {
             timer.start()
             updateButton.visible = false
@@ -53,12 +55,12 @@ Item {
         spacing: 10
         Label {
             text: "Atualizando... "
-            font: Qt.font({ pixelSize: 30, family: Def.standardizedFontFamily(), weight: Font.Bold })
+            font: Qt.font({ pixelSize: login.labelPixelSize-1, family: Def.standardizedFontFamily(), weight: Font.Bold })
         }
         BusyIndicator {
             anchors.verticalCenter: parent.verticalCenter
-            height: 30
-            width: 30
+            height: login.labelPixelSize-1
+            width: login.labelPixelSize-1
         }
     }
 
@@ -68,7 +70,7 @@ Item {
         anchors.bottom: labelCommit.top
         bottomPadding: -22
         text: "Essa atualização inclui:"
-        font: Qt.font({ pixelSize: 30, family: Def.standardizedFontFamily(), weight: Font.Bold })
+        font: Qt.font({ pixelSize: login.labelPixelSize-1, family: Def.standardizedFontFamily(), weight: Font.Bold })
     }
     Label {
         id: labelCommit
@@ -76,7 +78,7 @@ Item {
         anchors.bottom: parent.bottom
         bottomPadding: 5
         text: ""
-        font: Qt.font({ pixelSize: 30, family: Def.standardizedFontFamily(), weight: Font.Bold })
+        font: Qt.font({ pixelSize: login.labelPixelSize-1, family: Def.standardizedFontFamily(), weight: Font.Bold })
     }
     Image {
         id: back
@@ -84,12 +86,12 @@ Item {
         anchors.leftMargin: 5
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        width: 50
-        height: 50
+        width: Def.standardizedSizeIcon()
+        height: Def.standardizedSizeIcon()
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                noPass()
+                blockScreen.visible = true
                 stackView.pop()
             }
         }

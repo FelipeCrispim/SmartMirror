@@ -34,7 +34,7 @@ void Speech::say(int hour, QString weather)
     }
 
     // https://www.wunderground.com/weather/api/d/docs?d=resources/phrase-glossary&MR=1&_ga=2.183219110.1875570343.1511699835-1348404951.1511699835
-//    if(hour <= 13) {
+    if(hour < 17) {
         if(weather == "mostlycloudy" || weather == "mostlysunny" ||
                 weather == "partlycloudy" || weather == "partlysunny") {
             message += "Parece que hoje, será um dia com algumas nuvens.";
@@ -43,7 +43,7 @@ void Speech::say(int hour, QString weather)
         } else {
             message += "A expectativa para hoje, é de risco de chuva.";
         }
-//    }
+    }
 
     m_speech->say(message);
 }
@@ -57,4 +57,11 @@ void Speech::sayGoodBye()
         m_speech->say("Até mais");
     else
         m_speech->say("Até a próxima");
+}
+
+void Speech::infoAboutWeather(int wind, float levelSea, QString time)
+{
+    QString message = "Neste momento em Maceió, a velocidade do vento é de "+QString::number(wind)+" km/h,"
+                        " e o nível da maré, é de "+QString::number(levelSea)+"m até às "+time;
+    m_speech->say(message);
 }

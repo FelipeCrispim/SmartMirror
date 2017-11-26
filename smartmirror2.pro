@@ -39,6 +39,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     networkmanager.h \
     bluetoothmanager.h \
-    process.h \
     controller.h \
     speech.h

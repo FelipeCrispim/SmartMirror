@@ -13,12 +13,14 @@ public:
     Q_INVOKABLE bool isThereUser(QString user);
     Q_INVOKABLE bool firstTimeApp();
     Q_INVOKABLE void updateApp();
+    Q_INVOKABLE void getTwitter() ;
 
 private:
     QSettings m_settings;
 
 signals:
     void hasUpdate(QString commit);
+    void answerTwitter(QString ans);
 
 public slots:
     void onCheckGitVersion();

@@ -15,8 +15,8 @@ Controller::Controller(QObject *parent) : QObject(parent)
     connect(timerGit, SIGNAL(timeout()), this, SLOT(onCheckGitVersion()));
     timerGit->start(10000);
 
-//    m_settings.clear();
-//    m_settings.setValue("123", "123");
+    //    m_settings.clear();
+    //    m_settings.setValue("123", "123");
     if(!m_settings.contains("firstTime")){
         m_settings.setValue("firstTime", true);
 
@@ -63,12 +63,12 @@ void Controller::onCheckGitVersion()
     QTextStream in(&f);
     QString version = in.readAll();
 
-//    qDebug() << version.split("\n").at(0).split(" ").at(1);
+    //    qDebug() << version.split("\n").at(0).split(" ").at(1);
     f.close();
     if(version.split("\n").at(0).split(" ").at(1) != m_settings.value("gitVersion").toString()){
         emit hasUpdate(version.remove("    ").split("\n").at(4));
-//        lastVersionInGit.clear();
-//        lastVersionInGit = version.split("\n").at(0).split(" ").at(1);
+        //        lastVersionInGit.clear();
+        //        lastVersionInGit = version.split("\n").at(0).split(" ").at(1);
         qDebug() << "different version git";
         timerGit->stop();
     } else {
@@ -80,7 +80,7 @@ void Controller::updateApp()
 {
     QString command = "cd "+pathToProject+" && git pull && " +
             "cd .. && cp -r smartmirror2 "+QDir::tempPath()+" && "
-            "cd "+QDir::tempPath()+"/smartmirror2 && qmake && make && cp smartmirror2 /usr/bin && reboot";
+                                                            "cd "+QDir::tempPath()+"/smartmirror2 && qmake && make && cp smartmirror2 /usr/bin && reboot";
     system(command.toLatin1());
 
     command = "cd "+pathToProject+" && git show --name-only >"+QDir::tempPath()+"/tempSmartMirror.txt";
@@ -93,4 +93,30 @@ void Controller::updateApp()
     m_settings.setValue("gitVersion", version.split("\n").at(0).split(" ").at(1));
     m_settings.sync();
     timerGit->start();
+}
+
+void Controller::getTwitter() {
+    QString filename1 = QString("/Users/felipecrispim/smartmirror2/twitter/twitter_time_line.py");
+    QString filename2 = QString("p_pedrinhu");
+    QString filename3 = QString("/Users/felipecrispim/smartmirror2/twitter/");
+    QString cmd_qt = QString("python %1 %2 %3").arg(filename1).arg(filename2).arg(filename3);
+    qDebug()<<cmd_qt;
+    const char* cmd = cmd_qt.toLocal8Bit().constData();
+    system(cmd);
+
+    QFile file(filename3+filename2+".csv");
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        qDebug() << file.errorString();
+        //            return 1;
+    }
+
+    QStringList wordList;
+    while (!file.atEnd())
+    {
+        QByteArray line = file.readLine();
+        wordList.append(line.split(',').first());
+    }
+
+    emit answerTwitter(wordList.at(1));
 }

@@ -12,6 +12,7 @@ public:
     Q_INVOKABLE void sayWelcome();
     Q_INVOKABLE void say(int hour, QString weather);
     Q_INVOKABLE void sayGoodBye();
+    Q_INVOKABLE void infoAboutWeather(int wind, float levelSea, QString time);
 
 private:
     QTextToSpeech *m_speech;

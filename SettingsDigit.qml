@@ -115,8 +115,8 @@ Item {
         anchors.leftMargin: 5
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        width: 50
-        height: 50
+        width: Def.standardizedSizeIcon()
+        height: Def.standardizedSizeIcon()
         MouseArea {
             anchors.fill: parent
             onClicked: {

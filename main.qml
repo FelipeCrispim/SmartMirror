@@ -2,8 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
 import QtPositioning 5.2
-import QtBluetooth 5.2
-import Process 1.0
+import QtBluetooth 5.0
 import Controller 1.0
 import QtQuick.Window 2.2
 import "Definitions.js" as Def
@@ -21,8 +20,8 @@ ApplicationWindow {
     property int minutes: 0
     property int seconds: 0
     property string kindOfWeather: "mostlycloudy"
+    property int velocityOfWind: 0
     Component.onCompleted: {
-//        root.getWeather()
         root.timeChanged()
         if(controller.firstTimeApp() === true)
             stackView.push(introduction)
@@ -30,7 +29,7 @@ ApplicationWindow {
             blockScreen.visible = true
             btTimer.start()
         }
-//        console.log(location.position.coordinate.latitude)
+        //        console.log(location.position.coordinate.latitude)
     }
     PositionSource {
         id: position
@@ -41,27 +40,23 @@ ApplicationWindow {
             var coord = position.position.coordinate;
             position.latitude = coord.latitude
             position.longitude = coord.longitude
+//            root.getWeather()
         }
     }
 
     Controller {
         id: controller
         property string commit: ""
+        Component.onCompleted: {
+            controller.getTwitter()
+        }
         onHasUpdate: {
             controller.commit = commit
             update.visible = true
         }
+        onAnswerTwitter: ttLabel.text = ans;
     }
 
-    Process {
-        id: process
-        Component.onCompleted: {
-//            var command = "/Users/felipecrispim/dev/Qt-workspace/smartmirror2/twitter/twitter_time_line.py" +
-//                    " p_pedrinhu " + "/Users/felipecrispim/dev/Qt-workspace/smartmirror2/twitter/"
-//                        process.start("python", command)
-        }
-        onAnswer: ttLabel.text = ans;
-    }
     Timer {
         id: btTimer
         interval: 7000; running: false; repeat: true;
@@ -97,12 +92,12 @@ ApplicationWindow {
             onFinishedSignupBluttoth: {
                 btTimer.running = true
                 iconGetOut.visible = false
-//                animator.start()
+                //                animator.start()
                 //root.getWeather()
             }
             onFinishedSignupDigit: {
                 iconGetOut.visible = true
-//                animator.start()
+                //                animator.start()
                 //root.getWeather()
             }
         }
@@ -133,16 +128,17 @@ ApplicationWindow {
         var date = new Date;
         root.date = date.getDate() //1 to 31
         root.dayInWeek =  date.getDay() //0 to 6
-        root.hours = date.getHours() //0 to 23
+        root.hours = date.getHours()-1 //0 to 23
         root.minutes = date.getMinutes()
         root.seconds = date.getUTCSeconds();
     }
 
     function myFunction(response) {
         //        console.log("teste", JSON.parse(response).current_observation.temp_c);
-        tempLbl.text = JSON.parse(response).current_observation.temp_c + "º"
+        tempLbl.text = JSON.parse(response).current_observation.temp_c + "°"
         tempIcon.source = JSON.parse(response).current_observation.icon_url
         root.kindOfWeather = JSON.parse(response).current_observation.icon
+        root.velocityOfWind = JSON.parse(response).current_observation.wind_kph
     }
     StackView {
         id: stackView
@@ -213,10 +209,19 @@ ApplicationWindow {
                             anchors.fill: parent
                             width: 20
                         }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                if(root.hours < 12)
+                                    speech.infoAboutWeather(root.velocityOfWind, 1.7, "11:32")
+                                else
+                                    speech.infoAboutWeather(root.velocityOfWind, 0.7, "17:43")
+                            }
+                        }
                     }
                     Label {
                         id: tempLbl
-                        text: "00"
+                        text: "00°"
                         font: Qt.font({ pixelSize: 38, family: Def.standardizedFontFamily(), weight: Font.Bold })
                         //                        verticalAlignment: parent.verticalCenter
                         //                        bottomPadding: 15
@@ -243,24 +248,24 @@ ApplicationWindow {
                     }
                 }
             }
-//            Label {
-//                id: welcomeLabel
-//                text: {
-//                    if(root.hours < 12) return "Bom dia, bem vindo!"
-//                    else if(root.hours>=12 && root.hours <18) return "Boa tarde, bem vindo!"
-//                    else return "Boa noite, bem vindo!"
-//                }
-//                OpacityAnimator {
-//                    id: animator
-//                    target: welcomeLabel;
-//                    from: 1
-//                    to: 0
-//                    running: false
-//                    duration: 2000
-//                }
-//                anchors.centerIn: parent
-//                font: Qt.font({ pixelSize: 38, family: Def.standardizedFontFamily()})
-//            }
+            //            Label {
+            //                id: welcomeLabel
+            //                text: {
+            //                    if(root.hours < 12) return "Bom dia, bem vindo!"
+            //                    else if(root.hours>=12 && root.hours <18) return "Boa tarde, bem vindo!"
+            //                    else return "Boa noite, bem vindo!"
+            //                }
+            //                OpacityAnimator {
+            //                    id: animator
+            //                    target: welcomeLabel;
+            //                    from: 1
+            //                    to: 0
+            //                    running: false
+            //                    duration: 2000
+            //                }
+            //                anchors.centerIn: parent
+            //                font: Qt.font({ pixelSize: 38, family: Def.standardizedFontFamily()})
+            //            }
 
         }
 
@@ -277,7 +282,7 @@ ApplicationWindow {
             ConfirmDigit {
                 onCorrectPass: {
                     iconGetOut.visible = true
-//                    animator.start()
+                    //                    animator.start()
                     stackView.pop();
                     //root.getWeather()
                     speech.say(root.hours, root.kindOfWeather)
@@ -286,13 +291,6 @@ ApplicationWindow {
                     btTimer.start();
                     blockScreen.visible = true
                 }
-            }
-        }
-
-        Component {
-            id: updatePageComponent
-            UpdatePage{
-                id: updatePage
             }
         }
 
@@ -318,8 +316,8 @@ ApplicationWindow {
             }
             Image {
                 source: "qrc:/addUser.png"
-                height: Screen.pixelDensity*14
-                width: Screen.pixelDensity*14
+                height: Def.standardizedSizeIcon()
+                width: Def.standardizedSizeIcon()
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -333,8 +331,8 @@ ApplicationWindow {
             }
             Image {
                 id: update
-                height: Screen.pixelDensity*14
-                width: Screen.pixelDensity*14
+                height: Def.standardizedSizeIcon()
+                width: Def.standardizedSizeIcon()
                 source: "qrc:/update.png"
                 visible: false
 
@@ -344,22 +342,22 @@ ApplicationWindow {
                         btModel.running = false;
                         btTimer.stop();
                         stackView.push(Qt.resolvedUrl("UpdatePage.qml"),{commit:controller.commit})
-//                        updatePage.commit = "cor,tamanho,fonte"//controller.commit
+                        //                        updatePage.commit = "cor,tamanho,fonte"//controller.commit
                         blockScreen.visible = false
                     }
                 }
             }
-//            Button {
-//                id: update
-//                text: "test"
-//                onClicked: {
-//                    btModel.running = false;
-//                    btTimer.stop();
-//                    stackView.push(Qt.resolvedUrl("UpdatePage.qml"),{commit:controller.commit})
-////                        updatePage.commit = "cor,tamanho,fonte"//controller.commit
-//                    blockScreen.visible = false
-//                }
-//            }
+            //            Button {
+            //                id: update
+            //                text: "test"
+            //                onClicked: {
+            //                    btModel.running = false;
+            //                    btTimer.stop();
+            //                    stackView.push(Qt.resolvedUrl("UpdatePage.qml"),{commit:controller.commit})
+            ////                        updatePage.commit = "cor,tamanho,fonte"//controller.commit
+            //                    blockScreen.visible = false
+            //                }
+            //            }
         }
         //        function dark(){
         //            if(btModel.savedDeviceFound == true){
