@@ -94,7 +94,7 @@ void Controller::updateApp()
     system(command.toLatin1());
     emit progress("rodou qmake");
 
-    command = "cd /tmp/smartmirror2 && make && cp smartmirror2 /usr/bin";
+    command = "cd /tmp/smartmirror2 && make && rm /usr/bin/smartmirror2 && cp smartmirror2 /usr/bin";
     system(command.toLatin1());
     emit progress("make e copiou pro bin");
 
