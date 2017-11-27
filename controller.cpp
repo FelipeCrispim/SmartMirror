@@ -32,6 +32,7 @@ Controller::Controller(QObject *parent) : QObject(parent)
         Speech speech;
         speech.sayWelcome();
         qDebug() << "welcome";
+        system("pip install tweepy");
     } else {
         m_settings.setValue("firstTime", false);
     }

@@ -59,7 +59,7 @@ void Speech::say(int hour, QString weather)
 //    myProcess->start("./", arg2);
 //    myProcess->waitForReadyRead();
 #endif
-        QString tempMsg = "cd /media/smartmirror2 && espeak "+message;
+        QString tempMsg = "cd /media/smartmirror2 && ./speech.sh "+message;
         system(tempMsg.toLatin1());
 
 }
