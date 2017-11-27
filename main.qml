@@ -65,6 +65,8 @@ ApplicationWindow {
             update.visible = true
         }
         onProgress: {
+            messageDialog.close()
+            messageDialog.title = message
             messageDialog.text = message
             messageDialog.open()
         }
