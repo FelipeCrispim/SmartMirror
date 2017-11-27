@@ -30,6 +30,7 @@ ApplicationWindow {
             btTimer.start()
         }
         //        console.log(location.position.coordinate.latitude)
+        root.getWeather()
     }
     PositionSource {
         id: position
@@ -37,10 +38,10 @@ ApplicationWindow {
         property string latitude
         property string longitude
         onPositionChanged: {
-            var coord = position.position.coordinate;
-            position.latitude = coord.latitude
-            position.longitude = coord.longitude
-            root.getWeather()
+//            var coord = position.position.coordinate;
+//            position.latitude = coord.latitude
+//            position.longitude = coord.longitude
+//            root.getWeather()
         }
     }
 
@@ -109,7 +110,7 @@ ApplicationWindow {
     //http://api.wunderground.com/api/a43e3da295483298/conditions/q/-9,-35.7224.json
     function getWeather() {
         var xmlhttp = new XMLHttpRequest();
-        var url = "http://api.wunderground.com/api/a43e3da295483298/conditions/q/"+position.latitude+","+position.longitude+".json";
+        var url = "http://api.wunderground.com/api/a43e3da295483298/conditions/q/-9,-35.7224.json";
 
         xmlhttp.onreadystatechange=function() {
             if (xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status == 200) {

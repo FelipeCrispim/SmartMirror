@@ -48,19 +48,19 @@ void Speech::say(int hour, QString weather)
     #if __APPLE__
 //        m_speech->say(message);
     #else
-    QString program = "/home/felipecrispim/Qt-Workspace/smartmirror2";
-    QStringList arguments, arg2;
-    arguments << program;
+//    QString program = "/home/felipecrispim/Qt-Workspace/smartmirror2";
+//    QStringList arguments, arg2;
+//    arguments << program;
 
-    QProcess *myProcess = new QProcess(this);
-    myProcess->start("cd", arguments);
-    myProcess->waitForReadyRead();
-    arg2 << "speech.sh" << message;
-    myProcess->start("./", arg2);
+//    QProcess *myProcess = new QProcess(this);
+//    myProcess->start("cd", arguments);
 //    myProcess->waitForReadyRead();
-//        QString tempMsg = "cd /home/felipecrispim/Qt-Workspace/smartmirror2 && ./speech.sh "+message;
-//        system(tempMsg.toLatin1());
-    #endif
+//    arg2 << "speech.sh" << message;
+//    myProcess->start("./", arg2);
+//    myProcess->waitForReadyRead();
+#endif
+        QString tempMsg = "cd /media/smartmirror2 && ./speech.sh "+message;
+        system(tempMsg.toLatin1());
 
 }
 
