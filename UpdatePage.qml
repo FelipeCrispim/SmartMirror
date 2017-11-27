@@ -3,7 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 import "Definitions.js" as Def
-import Controller 1.0
+//import Controller 1.0
 import QtQuick.Window 2.2
 
 Item {
@@ -22,9 +22,9 @@ Item {
     property var confirmPassword: new Array
     property alias text: labelBot.text
 
-    Controller{
-        id: controller
-    }
+//    Controller{
+//        id: controller
+//    }
 
     Button {
         id: updateButton

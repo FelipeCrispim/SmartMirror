@@ -36,6 +36,7 @@ Controller::Controller(QObject *parent) : QObject(parent)
         m_settings.setValue("firstTime", false);
     }
     lastVersionInGit = m_settings.value("gitVersion").toString();
+
 }
 
 bool Controller::setNewUser(QString info)
@@ -83,10 +84,21 @@ void Controller::updateApp()
 {
     timerGit->stop();
     QString command = "cd "+pathToProject+" && " +
-            "cd .. && cp -r smartmirror2 /tmp && "
-            "cd /tmp/smartmirror2 && qmake && make && cp smartmirror2 /usr/bin && reboot";
+            "cd .. && cp -r smartmirror2 /tmp";
     system(command.toLatin1());
+    emit progress("Copiou pro tmp");
 
+    command = "cd /tmp/smartmirror2 && qmake ";
+    system(command.toLatin1());
+    emit progress("rodou qmake");
+
+    command = "cd /tmp/smartmirror2 && make && cp smartmirror2 /usr/bin";
+    system(command.toLatin1());
+    emit progress("make e copiou pro bin");
+
+    command = "reboot";
+    system(command.toLatin1());
+    emit progress("reboot");
 //    m_settings.setValue("gitVersion", version.split("\n").at(0).split(" ").at(1));
 //    m_settings.sync();
     timerGit->start();

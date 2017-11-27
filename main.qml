@@ -6,6 +6,7 @@ import QtBluetooth 5.0
 import Controller 1.0
 import QtQuick.Window 2.2
 import "Definitions.js" as Def
+import QtQuick.Dialogs 1.1
 
 ApplicationWindow {
     id: root
@@ -45,6 +46,14 @@ ApplicationWindow {
         }
     }
 
+    MessageDialog {
+        id: messageDialog
+        title: "May I have your attention please"
+        text: ""
+        onAccepted: {
+        }
+    }
+
     Controller {
         id: controller
         property string commit: ""
@@ -55,6 +64,11 @@ ApplicationWindow {
             controller.commit = commit
             update.visible = true
         }
+        onProgress: {
+            messageDialog.text = message
+            messageDialog.open()
+        }
+
         onAnswerTwitter: ttLabel.text = ans;
     }
 
