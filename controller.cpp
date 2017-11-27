@@ -83,6 +83,8 @@ void Controller::onCheckGitVersion()
 void Controller::updateApp()
 {
     timerGit->stop();
+    emit progress("Começando a atualizar");
+
     QString command = "cd "+pathToProject+" && " +
             "cd .. && cp -r smartmirror2 /tmp";
     system(command.toLatin1());
