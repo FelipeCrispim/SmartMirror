@@ -18,7 +18,6 @@ Controller::Controller(QObject *parent) : QObject(parent)
     //    m_settings.clear();
     //    m_settings.setValue("123", "123");
 //    m_settings.setValue("gitVersion", 123);
-    qDebug() << QDir::tempPath();
     if(!m_settings.contains("firstTime")){
         m_settings.setValue("firstTime", true);
 
@@ -85,7 +84,7 @@ void Controller::updateApp()
     timerGit->stop();
     QString command = "cd "+pathToProject+" && " +
             "cd .. && cp -r smartmirror2 "+QDir::tempPath()+" && "
-            "cd "+QDir::tempPath()+"/smartmirror2 && qmake && make && cp smartmirror2 /Users/felipecrispim/";
+            "cd "+QDir::tempPath()+"/smartmirror2 && qmake && make && cp smartmirror2 /usr/bin && reboot";
     system(command.toLatin1());
 
 //    m_settings.setValue("gitVersion", version.split("\n").at(0).split(" ").at(1));
