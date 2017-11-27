@@ -5,7 +5,7 @@
 #include <QDir>
 #include "speech.h"
 
-QString pathToProject = "/home/felipecrispim/smartmirror2";
+QString pathToProject = "/media/smartmirror2";
 QString lastVersionInGit; //Versao no repositorio
 QTimer *timerGit;
 
