@@ -40,6 +40,7 @@ ApplicationWindow {
             var coord = position.position.coordinate;
             position.latitude = coord.latitude
             position.longitude = coord.longitude
+
 //            root.getWeather()
         }
     }
