@@ -25,7 +25,6 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("speech", &speech);
     qmlRegisterType<Controller>("Controller", 1, 0, "Controller");
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
-
 //    wifi.isOnline();
     return app.exec();
 }

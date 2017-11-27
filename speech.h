@@ -2,7 +2,6 @@
 #define SPEECH_H
 
 #include <QObject>
-#include <QTextToSpeech>
 
 class Speech : public QObject
 {
@@ -15,7 +14,7 @@ public:
     Q_INVOKABLE void infoAboutWeather(int wind, float levelSea, QString time);
 
 private:
-    QTextToSpeech *m_speech;
+//    QTextToSpeech *m_speech;
 
 public slots:
 };

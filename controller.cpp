@@ -5,7 +5,7 @@
 #include <QDir>
 #include "speech.h"
 
-QString pathToProject = "/Users/felipecrispim/smartmirror2";
+QString pathToProject = "/home/felipecrispim/smartmirror2";
 QString lastVersionInGit; //Versao no repositorio
 QTimer *timerGit;
 
@@ -93,9 +93,9 @@ void Controller::updateApp()
 }
 
 void Controller::getTwitter() {
-    QString filename1 = QString("/Users/felipecrispim/smartmirror2/twitter/twitter_time_line.py");
+    QString filename1 = QString(pathToProject+"/twitter/twitter_time_line.py");
     QString filename2 = QString("p_pedrinhu");
-    QString filename3 = QString("/Users/felipecrispim/smartmirror2/twitter/");
+    QString filename3 = QString(pathToProject+"/twitter/");
     QString cmd_qt = QString("python %1 %2 %3").arg(filename1).arg(filename2).arg(filename3);
     qDebug()<<cmd_qt;
     const char* cmd = cmd_qt.toLocal8Bit().constData();

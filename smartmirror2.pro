@@ -1,4 +1,4 @@
-QT += qml quick network bluetooth positioning core texttospeech
+QT += qml quick network bluetooth positioning core
 static {
     QT += svg
     QTPLUGIN += qtvirtualkeyboardplugin
@@ -41,3 +41,6 @@ HEADERS += \
     bluetoothmanager.h \
     controller.h \
     speech.h
+
+DISTFILES += \
+    speech.sh
