@@ -83,8 +83,8 @@ void Controller::updateApp()
 {
     timerGit->stop();
     QString command = "cd "+pathToProject+" && " +
-            "cd .. && cp -r smartmirror2 "+QDir::tempPath()+" && "
-            "cd "+QDir::tempPath()+"/smartmirror2 && qmake && make && cp smartmirror2 /usr/bin && reboot";
+            "cd .. && cp -r smartmirror2 /tmp && "
+            "cd /tmp/smartmirror2 && qmake && make && cp smartmirror2 /usr/bin && reboot";
     system(command.toLatin1());
 
 //    m_settings.setValue("gitVersion", version.split("\n").at(0).split(" ").at(1));
