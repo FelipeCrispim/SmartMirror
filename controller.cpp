@@ -88,6 +88,7 @@ void Controller::updateApp()
             "cd .. && cp -r smartmirror2 /tmp";
     system(command.toLatin1());
 
+    emit progress("A aplicação será reiniciada... ");
     command = "cd /tmp/smartmirror2 && qmake ";
     system(command.toLatin1());
 
