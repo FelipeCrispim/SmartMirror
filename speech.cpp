@@ -13,6 +13,7 @@ Speech::Speech(QObject *parent) : QObject(parent)
 //    m_speech->setRate(0);
 //    m_speech->setPitch(0);
 //    m_speech->setLocale(QLocale::Portuguese);
+
     m_process = new QProcess(this);
 }
 
