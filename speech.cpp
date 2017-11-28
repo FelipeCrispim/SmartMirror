@@ -83,7 +83,8 @@ void Speech::infoAboutWeather(int wind, float levelSea, QString time)
 //    QProcess process;
     QString message = "omxplayer -o hdmi "+pathToAudioProject+"/weather.mp3";
 //    QProcess process;
-    m_process->start(message);
+    QString tempMsg = "mpg123 "+pathToAudioProject+"/weather.mp3";
+    m_process->start(tempMsg);
 //    system(message);
 
 }
