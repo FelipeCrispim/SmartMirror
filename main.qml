@@ -22,7 +22,7 @@ ApplicationWindow {
     property int seconds: 0
     property string kindOfWeather: "mostlycloudy"
     property int velocityOfWind: 0
-    property string progressUpdate: "Felipe"
+    property string progressUpdate: "Atualizando... "
     Component.onCompleted: {
         root.timeChanged()
         if(controller.firstTimeApp() === true)
@@ -58,10 +58,7 @@ ApplicationWindow {
             update.visible = true
         }
         onProgress: {
-            messageDialog.close()
-            messageDialog.title = message
-            messageDialog.text = message
-            messageDialog.open()
+            root.progressUpdate = message
         }
 
         onAnswerTwitter: ttLabel.text = ans;
@@ -110,12 +107,12 @@ ApplicationWindow {
                 //                animator.start()
                 //root.getWeather()
             }
+            onNoTwitter: {
+                ttLabel.visible = false
+            }
         }
     }
 
-    PositionSource {
-        id: coord
-    }
     //http://api.wunderground.com/api/a43e3da295483298/conditions/q/-9,-35.7224.json
     function getWeather() {
         var xmlhttp = new XMLHttpRequest();
@@ -164,18 +161,18 @@ ApplicationWindow {
                 Label {
                     property var days: ["Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sábado",""]
                     text: days[root.dayInWeek]+", "+root.date
-                    font: Qt.font({ pixelSize: 32, family: Def.standardizedFontFamily()})
+                    font: Qt.font({ pixelSize: 37, family: Def.standardizedFontFamily()})
                 }
 
                 Row {
                     id: clock
                     Label {
                         text: root.hours
-                        font: Qt.font({ pixelSize: 60, family: Def.standardizedFontFamily(), weight: Font.Bold })
+                        font: Qt.font({ pixelSize: 65, family: Def.standardizedFontFamily(), weight: Font.Bold })
                     }
                     Label {
                         text: ":"
-                        font: Qt.font({ pixelSize: 60, family: Def.standardizedFontFamily(), weight: Font.Bold })
+                        font: Qt.font({ pixelSize: 65, family: Def.standardizedFontFamily(), weight: Font.Bold })
                         color: (root.seconds & 1) == 0? "transparent" : "white"
                     }
                     Label {
@@ -188,17 +185,17 @@ ApplicationWindow {
 
 
                         }
-                        font: Qt.font({ pixelSize: 60, family: Def.standardizedFontFamily(), weight: Font.Bold })
+                        font: Qt.font({ pixelSize: 65, family: Def.standardizedFontFamily(), weight: Font.Bold })
                     }
                 }
                 Label {
                     id: ttLabel
-                    text: "goal1"
+                    text: "twitter"
                     width: 150
                     wrapMode: Label.WordWrap
                     font.bold: true
                     topPadding: 30
-                    font.pixelSize: 15
+                    font.pixelSize: 20
                 }
 
             }
@@ -211,8 +208,8 @@ ApplicationWindow {
                     spacing: 10
                     //                    Layout.alignment: Qt.AlignRight
                     Item {
-                        width: 54
-                        height: 54
+                        width: 57
+                        height: 57
                         AnimatedImage {
                             id: tempIcon
                             source: "http://icons.wxug.com/i/c/k/nt_rain.gif"
@@ -232,7 +229,7 @@ ApplicationWindow {
                     Label {
                         id: tempLbl
                         text: "00°"
-                        font: Qt.font({ pixelSize: 38, family: Def.standardizedFontFamily(), weight: Font.Bold })
+                        font: Qt.font({ pixelSize: 43, family: Def.standardizedFontFamily(), weight: Font.Bold })
                         //                        verticalAlignment: parent.verticalCenter
                         //                        bottomPadding: 15
                     }

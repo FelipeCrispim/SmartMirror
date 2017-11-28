@@ -5,8 +5,7 @@
 #include <QDir>
 #include "speech.h"
 
-QString pathToProject = "/Users/felipecrispim/smartmirror2";
-QString lastVersionInGit; //Versao no repositorio
+QString pathToProject = "/media/smartmirror2";
 QTimer *timerGit;
 
 Controller::Controller(QObject *parent) : QObject(parent)
@@ -21,22 +20,22 @@ Controller::Controller(QObject *parent) : QObject(parent)
     if(!m_settings.contains("firstTime")){
         m_settings.setValue("firstTime", true);
 
-        QFile f(QDir::homePath()+"/test.txt");
+//        QFile f(QDir::homePath()+"/test.txt");
 
-        QString command = "cd "+pathToProject+" && git show --name-only >"+QDir::homePath()+"/test.txt";
-        system(command.toLatin1());
-        f.open(QFile::ReadOnly | QFile::Text);
-        QTextStream in(&f);
-        //in.readAll().remove("    ").split("\n").at(4);
-        m_settings.setValue("gitVersion", in.readAll().split("\n").at(0).split(" ").at(1));
+//        QString command = "cd "+pathToProject+" && git show --name-only >"+QDir::homePath()+"/test.txt";
+//        system(command.toLatin1());
+//        f.open(QFile::ReadOnly | QFile::Text);
+//        QTextStream in(&f);
+//        //in.readAll().remove("    ").split("\n").at(4);
+//        m_settings.setValue("gitVersion", in.readAll().split("\n").at(0).split(" ").at(1));
+//        system("pip install tweepy");
+        QProcess process;
+        process.start("pip install tweepy");
         Speech speech;
         speech.sayWelcome();
-        qDebug() << "welcome";
-        system("pip install tweepy");
     } else {
         m_settings.setValue("firstTime", false);
     }
-    lastVersionInGit = m_settings.value("gitVersion").toString();
 
 }
 
@@ -92,7 +91,7 @@ void Controller::updateApp()
     command = "cd /tmp/smartmirror2 && qmake ";
     system(command.toLatin1());
 
-    emit progress("A aplicação será reiniciada...");
+    emit progress("A aplicação será reiniciada... ");
     command = "cd /tmp/smartmirror2 && make && rm /usr/bin/smartmirror2 && cp smartmirror2 /usr/bin";
     system(command.toLatin1());
 

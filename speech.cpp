@@ -4,6 +4,8 @@
 #include <QTime>
 #include <QProcess>
 
+QString pathToAudioProject = "/media/smartmirror2/audios";
+
 Speech::Speech(QObject *parent) : QObject(parent)
 {
 //    m_speech = new QTextToSpeech(this);
@@ -15,7 +17,9 @@ Speech::Speech(QObject *parent) : QObject(parent)
 
 void Speech::sayWelcome()
 {
-//    m_speech->say("Seja bem vindo, ao aisseuf");
+    QString message = "omxplayer -o hdmi "+pathToAudioProject+"/welcome.mp3";
+    QProcess process;
+    process.start(message);
 }
 
 void Speech::say(int hour, QString weather)
@@ -59,8 +63,10 @@ void Speech::say(int hour, QString weather)
 //    myProcess->start("./", arg2);
 //    myProcess->waitForReadyRead();
 #endif
-        QString tempMsg = "cd /media/smartmirror2 && ./speech.sh "+message;
-        system(tempMsg.toLatin1());
+
+        QString tempMsg = "./media/smartmirror2/speech.sh "+message;
+        QProcess process;
+        process.start(tempMsg);
 
 }
 
@@ -69,17 +75,22 @@ void Speech::sayGoodBye()
     // returns a random number randomValue with 0 <= randomValue < number
     qsrand(QTime::currentTime().msec());
     int randomValue = rand() % 20;
-//    if(randomValue <= 10)
-//        m_speech->say("Até mais");
-//    else
-//        m_speech->say("Até a próxima");
+    if(randomValue <= 10) {
+        QString message = "omxplayer -o hdmi "+pathToAudioProject+"/seeYou.mp3";
+        QProcess process;
+        process.start(message);
+    } else {
+        QString message = "omxplayer -o hdmi "+pathToAudioProject+"/seeYouNextTime.mp3";
+        QProcess process;
+        process.start(message);
+    }
 }
 
 void Speech::infoAboutWeather(int wind, float levelSea, QString time)
 {
-    QString message = "Nesse momento em Maceió, a velocidade do vento é de "+QString::number(wind)+" km/h,"
-                        " e o nível da maré, é de "+QString::number(levelSea)+"m até às "+time;
-//    m_speech->say(message);
-    system(message.toLatin1());
+    QString message = "\"Nesse momento em Maceió, a velocidade do vento é de "+QString::number(wind)+" km/h,"
+                        " e o nível da maré, é de "+QString::number(levelSea)+"m até às "+time+"\"";
+    QProcess process;
+    process.start("./media/smartmirror2/speech.sh "+message);
 
 }

@@ -110,18 +110,18 @@ Item {
         text: "Digite 3 dígitos"
         font: Qt.font({ pixelSize: login.labelPixelSize-1, family: Def.standardizedFontFamily(), weight: Font.Bold })
     }
-    Image {
-        source: "qrc:/back.png"
-        anchors.leftMargin: 5
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        width: Def.standardizedSizeIcon()
-        height: Def.standardizedSizeIcon()
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                stackView.pop()
-            }
-        }
-    }
+//    Image {
+//        source: "qrc:/back.png"
+//        anchors.leftMargin: 5
+//        anchors.bottom: parent.bottom
+//        anchors.left: parent.left
+//        width: Def.standardizedSizeIcon()
+//        height: Def.standardizedSizeIcon()
+//        MouseArea {
+//            anchors.fill: parent
+//            onClicked: {
+//                stackView.pop()
+//            }
+//        }
+//    }
 }

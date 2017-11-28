@@ -54,7 +54,7 @@ Item {
         anchors.centerIn: parent
         spacing: 10
         Label {
-            text: "Atualizando... "
+            text: root.progressUpdate
             font: Qt.font({ pixelSize: login.labelPixelSize-1, family: Def.standardizedFontFamily(), weight: Font.Bold })
         }
         BusyIndicator {
@@ -69,7 +69,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: labelCommit.top
         bottomPadding: -22
-        text: root.progressUpdate//"Essa atualização inclui:"
+        text: "Essa atualização inclui:"
         font: Qt.font({ pixelSize: login.labelPixelSize-1, family: Def.standardizedFontFamily(), weight: Font.Bold })
     }
     Label {

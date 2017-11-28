@@ -35,5 +35,5 @@ for key in "${!SHORT[@]}"
  
     echo "Playing line: $(($key+1)) of $(($STRINGNUM+1))"
     NEXTURL=$(echo ${SHORT[$key]} | xxd -plain | tr -d '\n' | sed 's/\(..\)/%\1/g')
-    mpg123 -q "http://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=$NEXTURL&tl=Pt-br"
+    omxplayer -o hdmi "http://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=$NEXTURL&tl=Pt-br"
 done

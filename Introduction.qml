@@ -10,11 +10,9 @@ Item {
     id: rect
     signal finishedSignupBluttoth()
     signal finishedSignupDigit()
+    signal noTwitter()
     property bool signUpWithBluetooth
     property int labelPixelSize: (rect.width*0.15)*0.25
-    Component.onCompleted: {
-        console.log("ratio", Screen.pixelDensity)
-    }
 
     Component {
         id: settingsBluettoth
@@ -46,12 +44,12 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         font: Qt.font({ pixelSize: rect.labelPixelSize, family: "Serif", weight: Font.Bold })
         text: {
-            if(swipeView.currentIndex == 0)
-                "Defina um tipo de desbloqueio"
+            if(swipeView.currentIndex == 1)
+                "Forneça seu usuário do twitter"
             //            else if(swipeView.currentIndex == 1)
             //                "Conecte-nos ao seu wifi"
             else
-                "Forneça seu usuário do twitter"
+                ""
         }
     }
     Image {
@@ -61,6 +59,15 @@ Item {
         anchors.bottom: parent.bottom
         height: 50
         width: 50
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                if(swipeView.currentIndex == 1) {
+                    noTwitter()
+                    stackView.pop();
+                }
+            }
+        }
     }
 
 
@@ -87,30 +94,38 @@ Item {
         //            interval: 1500; running: true; repeat: false
         //            onTriggered: swipeView.currentIndex += 1
         //        }
-        Item {
-            Row {
-                anchors.centerIn: parent
-                spacing: 10
-                Button {
-                    id: button
-                    text: "Bluetooth"
-                    font: Qt.font({ pixelSize: rect.labelPixelSize, family: "Serif", weight: Font.Bold })
-                    height: Screen.pixelDensity*41
-                    width: Screen.pixelDensity*68
-                    onClicked: {
-                        //                        bluetoothManager.registering(true);
-                        stackView.push(settingsBluettoth)
-                    }
-                }
-                Button {
-                    text: "3 dígitos"
-                    font: Qt.font({ pixelSize: rect.labelPixelSize, family: "Serif", weight: Font.Bold })
-                    height: Screen.pixelDensity*41
-                    width: Screen.pixelDensity*68
-                    onClicked: {
-                        stackView.push(settingsDigit)
-                    }
-                }
+        //        Item {
+        //            Row {
+        //                anchors.centerIn: parent
+        //                spacing: 10
+        //                Button {
+        //                    id: button
+        //                    text: "Bluetooth"
+        //                    font: Qt.font({ pixelSize: rect.labelPixelSize, family: "Serif", weight: Font.Bold })
+        //                    height: Screen.pixelDensity*41
+        //                    width: Screen.pixelDensity*68
+        //                    onClicked: {
+        //                        //                        bluetoothManager.registering(true);
+        //                        stackView.push(settingsBluettoth)
+        //                    }
+        //                }
+        //                Button {
+        //                    text: "3 dígitos"
+        //                    font: Qt.font({ pixelSize: rect.labelPixelSize, family: "Serif", weight: Font.Bold })
+        //                    height: Screen.pixelDensity*41
+        //                    width: Screen.pixelDensity*68
+        //                    onClicked: {
+        //                        stackView.push(settingsDigit)
+        //                    }
+        //                }
+        //            }
+        //        }
+        SettingsDigit {
+            onAdvanceSwipeView: {
+                swipeView.currentIndex += 1
+                signUpWithBluetooth = false
+                controller.setNewUser(user)
+                //                stackView.pop();
             }
         }
 

@@ -2,6 +2,7 @@
 #define SPEECH_H
 
 #include <QObject>
+#include <QProcess>
 
 class Speech : public QObject
 {
@@ -15,6 +16,7 @@ public:
 
 private:
 //    QTextToSpeech *m_speech;
+    QProcess *m_process;
 
 public slots:
 };
