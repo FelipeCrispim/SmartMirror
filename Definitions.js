@@ -3,9 +3,9 @@ function standardizedFontFamily() {
 }
 
 function standardizedSizeIcon() {
-    return Screen.pixelDensity*13
+    return Screen.pixelDensity*12
 }
 
 function labelPixelSize() {
-    return Screen.pixelDensity*9
+    return Screen.pixelDensity*6
 }

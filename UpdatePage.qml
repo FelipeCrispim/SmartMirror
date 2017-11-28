@@ -69,7 +69,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: labelCommit.top
         bottomPadding: -22
-        text: "Essa atualização inclui:"
+        text: root.progressUpdate//"Essa atualização inclui:"
         font: Qt.font({ pixelSize: login.labelPixelSize-1, family: Def.standardizedFontFamily(), weight: Font.Bold })
     }
     Label {

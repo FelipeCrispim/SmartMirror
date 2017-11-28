@@ -22,6 +22,7 @@ ApplicationWindow {
     property int seconds: 0
     property string kindOfWeather: "mostlycloudy"
     property int velocityOfWind: 0
+    property string progressUpdate: "Felipe"
     Component.onCompleted: {
         root.timeChanged()
         if(controller.firstTimeApp() === true)
@@ -43,14 +44,6 @@ ApplicationWindow {
 //            position.latitude = coord.latitude
 //            position.longitude = coord.longitude
 //            root.getWeather()
-        }
-    }
-
-    MessageDialog {
-        id: messageDialog
-        title: "May I have your attention please"
-        text: ""
-        onAccepted: {
         }
     }
 

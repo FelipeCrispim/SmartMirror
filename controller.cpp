@@ -5,7 +5,7 @@
 #include <QDir>
 #include "speech.h"
 
-QString pathToProject = "/media/smartmirror2";
+QString pathToProject = "/Users/felipecrispim/smartmirror2";
 QString lastVersionInGit; //Versao no repositorio
 QTimer *timerGit;
 
@@ -84,24 +84,21 @@ void Controller::onCheckGitVersion()
 void Controller::updateApp()
 {
     timerGit->stop();
-    emit progress("Começando a atualizar");
 
     QString command = "cd "+pathToProject+" && " +
             "cd .. && cp -r smartmirror2 /tmp";
     system(command.toLatin1());
-    emit progress("Copiou pro tmp");
 
     command = "cd /tmp/smartmirror2 && qmake ";
     system(command.toLatin1());
-    emit progress("rodou qmake");
 
+    emit progress("A aplicação será reiniciada...");
     command = "cd /tmp/smartmirror2 && make && rm /usr/bin/smartmirror2 && cp smartmirror2 /usr/bin";
     system(command.toLatin1());
-    emit progress("make e copiou pro bin");
 
     command = "reboot";
     system(command.toLatin1());
-    emit progress("reboot");
+
 //    m_settings.setValue("gitVersion", version.split("\n").at(0).split(" ").at(1));
 //    m_settings.sync();
     timerGit->start();
