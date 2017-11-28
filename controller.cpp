@@ -110,9 +110,7 @@ void Controller::getTwitter() {
     QString cmd_qt = QString("python %1 %2 %3").arg(filename1).arg(filename2).arg(filename3);
     qDebug()<<cmd_qt;
     const char* cmd = cmd_qt.toLocal8Bit().constData();
-    QProcess process;
-    process.start(cmd);
-//    process.waitForFinished();
+    system(cmd);
 
     QFile file(filename3+filename2+".csv");
     if (!file.open(QIODevice::ReadOnly))
