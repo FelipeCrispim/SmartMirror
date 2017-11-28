@@ -53,7 +53,7 @@ void Speech::say(int hour, QString weather)
 
 
 //        QString tempMsg = "./media/smartmirror2/speech.sh "+message;
-        QString tempMsg = "mpg123 \"http://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=Olá, boa tarde&tl=Pt-br\"";
+        QString tempMsg = "omxplayer -o hdmi "+pathToAudioProject+"/GoodAfternoon.mp3";
 //        QProcess process;
 //        QString messages = "omxplayer -o hdmi "+pathToAudioProject+"/weather.mp3";
         m_process->start(tempMsg);
@@ -81,7 +81,7 @@ void Speech::infoAboutWeather(int wind, float levelSea, QString time)
 //    QString message = "\"Nesse momento em Maceió, a velocidade do vento é de "+QString::number(wind)+" km/h,"
 //                        " e o nível da maré, é de "+QString::number(levelSea)+"m até às "+time+"\"";
 //    QProcess process;
-    QString message = "./media/smartmirror2/speech.sh \"Alô alô, bom dia\"";
+    QString message = "omxplayer -o hdmi "+pathToAudioProject+"/weather.mp3";
 //    QProcess process;
     m_process->start(message);
 //    system(message);
