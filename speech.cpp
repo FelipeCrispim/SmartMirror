@@ -13,13 +13,14 @@ Speech::Speech(QObject *parent) : QObject(parent)
 //    m_speech->setRate(0);
 //    m_speech->setPitch(0);
 //    m_speech->setLocale(QLocale::Portuguese);
+    m_process = new QProcess(this);
 }
 
 void Speech::sayWelcome()
 {
     QString message = "omxplayer -o hdmi "+pathToAudioProject+"/welcome.mp3";
-    QProcess process;
-    process.start(message);
+//    QProcess process;
+    m_process->start(message);
 }
 
 void Speech::say(int hour, QString weather)
@@ -65,8 +66,8 @@ void Speech::say(int hour, QString weather)
 #endif
 
         QString tempMsg = "./media/smartmirror2/speech.sh "+message;
-        QProcess process;
-        process.start(tempMsg);
+//        QProcess process;
+        m_process->start(tempMsg);
 
 }
 
@@ -77,12 +78,12 @@ void Speech::sayGoodBye()
     int randomValue = rand() % 20;
     if(randomValue <= 10) {
         QString message = "omxplayer -o hdmi "+pathToAudioProject+"/seeYou.mp3";
-        QProcess process;
-        process.start(message);
+//        QProcess process;
+        m_process->start(message);
     } else {
         QString message = "omxplayer -o hdmi "+pathToAudioProject+"/seeYouNextTime.mp3";
-        QProcess process;
-        process.start(message);
+//        QProcess process;
+        m_process->start(message);
     }
 }
 
@@ -90,7 +91,7 @@ void Speech::infoAboutWeather(int wind, float levelSea, QString time)
 {
     QString message = "\"Nesse momento em Maceió, a velocidade do vento é de "+QString::number(wind)+" km/h,"
                         " e o nível da maré, é de "+QString::number(levelSea)+"m até às "+time+"\"";
-    QProcess process;
-    process.start("./media/smartmirror2/speech.sh "+message);
+//    QProcess process;
+    m_process->start("./media/smartmirror2/speech.sh "+message);
 
 }
