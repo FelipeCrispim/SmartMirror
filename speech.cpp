@@ -82,8 +82,8 @@ void Speech::infoAboutWeather(int wind, float levelSea, QString time)
 //                        " e o nível da maré, é de "+QString::number(levelSea)+"m até às "+time+"\"";
 //    QProcess process;
     QString message = "omxplayer -o hdmi "+pathToAudioProject+"/weather.mp3";
-    QProcess process;
-    process.start(message);
+//    QProcess process;
+    m_process->start(message);
 //    system(message);
 
 }
