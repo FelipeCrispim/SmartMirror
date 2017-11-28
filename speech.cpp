@@ -30,13 +30,13 @@ void Speech::say(int hour, QString weather)
 
     if(hour < 12){
         //bom dia
-        message += "Olá bom dia! ";
+        message += "\"Olá bom dia!\"";
     } else if(hour >= 12 && hour < 18) {
         //boa tarde
-        message += "Olá boa tarde! ";
+        message += "\"Olá boa tarde!\"";
     } else {
         //boa noite
-        message += "Olá boa noite! ";
+        message += "\"Olá boa noite!\"";
     }
 
     // https://www.wunderground.com/weather/api/d/docs?d=resources/phrase-glossary&MR=1&_ga=2.183219110.1875570343.1511699835-1348404951.1511699835
