@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
 //    Process myProcess;
     Speech speech;
 
+
     QQmlApplicationEngine engine;
 //    engine.rootContext()->setContextProperty("networkManager", &wifi);
 //    engine.rootContext()->setContextProperty("bluetoothManager", &bluetooth);
