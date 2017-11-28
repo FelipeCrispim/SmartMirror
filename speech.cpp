@@ -66,7 +66,8 @@ void Speech::say(int hour, QString weather)
 //    myProcess->waitForReadyRead();
 #endif
 
-        QString tempMsg = "./media/smartmirror2/speech.sh "+message;
+//        QString tempMsg = "./media/smartmirror2/speech.sh "+message;
+        QString tempMsg = "omxplayer -o hdmi http://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=Alo%20Alo&tl=Pt-br";
 //        QProcess process;
         m_process->start(tempMsg);
 
