@@ -126,5 +126,5 @@ void Controller::getTwitter() {
         wordList.append(line.split(',').first());
     }
 
-    emit answerTwitter(wordList.at(1));
+    emit answerTwitter(wordList);
 }
