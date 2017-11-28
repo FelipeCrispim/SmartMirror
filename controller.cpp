@@ -110,7 +110,9 @@ void Controller::getTwitter() {
     QString cmd_qt = QString("python %1 %2 %3").arg(filename1).arg(filename2).arg(filename3);
     qDebug()<<cmd_qt;
     const char* cmd = cmd_qt.toLocal8Bit().constData();
-    system(cmd);
+    QProcess process;
+    process.start(cmd);
+//    process.waitForFinished();
 
     QFile file(filename3+filename2+".csv");
     if (!file.open(QIODevice::ReadOnly))
@@ -126,5 +128,5 @@ void Controller::getTwitter() {
         wordList.append(line.split(',').first());
     }
 
-    emit answerTwitter(wordList.at(1));
+    emit answerTwitter(wordList);
 }

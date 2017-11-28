@@ -58,7 +58,12 @@ ApplicationWindow {
             root.progressUpdate = message
         }
 
-        onAnswerTwitter: ttLabel.text = ans;
+        onAnswerTwitter: {
+            ttLabel.text = "";
+            for(var i =1; i<=3; i++){
+                ttLabel.text += ans[i]+"\n";
+            }
+        }
     }
 
     Timer {
@@ -188,7 +193,7 @@ ApplicationWindow {
                 }
                 Label {
                     id: ttLabel
-                    text: "twitter"
+                    text: ""
                     width: 150
                     wrapMode: Label.WordWrap
                     font.bold: true

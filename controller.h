@@ -20,7 +20,7 @@ private:
 
 signals:
     void hasUpdate(QString commit);
-    void answerTwitter(QString ans);
+    void answerTwitter(QStringList ans);
     void progress(QString message);
 public slots:
     void onCheckGitVersion();
