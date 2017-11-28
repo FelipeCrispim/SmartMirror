@@ -50,9 +50,6 @@ ApplicationWindow {
     Controller {
         id: controller
         property string commit: ""
-        Component.onCompleted: {
-            controller.getTwitter()
-        }
         onHasUpdate: {
             controller.commit = commit
             update.visible = true
@@ -106,9 +103,10 @@ ApplicationWindow {
                 iconGetOut.visible = true
                 //                animator.start()
                 //root.getWeather()
+                controller.getTwitter()
             }
             onNoTwitter: {
-                ttLabel.visible = false
+                ttLabel.text = ""
             }
         }
     }
@@ -287,6 +285,7 @@ ApplicationWindow {
             id: keypadPage
             ConfirmDigit {
                 onCorrectPass: {
+                    controller.getTwitter()
                     iconGetOut.visible = true
                     //                    animator.start()
                     stackView.pop();
