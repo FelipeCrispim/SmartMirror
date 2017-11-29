@@ -59,7 +59,7 @@ bool Controller::firstTimeApp()
 
 void Controller::onCheckGitVersion()
 {
-    QString command = "> "+QDir::tempPath()+"/tempSmartMirror.txt &&"+"cd "+pathToProject+" && git stash && git pull >"+QDir::tempPath()+"/tempSmartMirror.txt";
+    QString command = "> "+QDir::tempPath()+"/tempSmartMirror.txt &&"+"cd "+pathToProject+"  && git pull >"+QDir::tempPath()+"/tempSmartMirror.txt";
     system(command.toLatin1());
     QFile f(QDir::tempPath()+"/tempSmartMirror.txt");
     f.open(QFile::ReadOnly | QFile::Text);
