@@ -5,7 +5,7 @@
 #include <QDir>
 #include "speech.h"
 
-QString pathToProject = "/media/smartmirror2";
+QString pathToProject = "media/smartmirror2";
 QTimer *timerGit;
 
 Controller::Controller(QObject *parent) : QObject(parent)
