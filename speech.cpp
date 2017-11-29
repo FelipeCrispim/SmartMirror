@@ -81,7 +81,7 @@ void Speech::sayGoodBye()
 void Speech::infoAboutWeather(int wind, float levelSea, QString time)
 {
     QString message = "Agora em Macei%C3%B3, a velocidade do vento %C3%A9 de "+QString::number(wind)+" km/h,"
-                        " e o n%C3%ADvel da mar%C3%A9, %C3%A9 de "+QString::number(levelSea)+" metros at%C3%A9 at%C3%A9 "+time+"";
+                        " e o n%C3%ADvel da mar%C3%A9, %C3%A9 de "+QString::number(levelSea)+" metros at%C3%A9 %C3%A0s "+time+"";
 //    QProcess process;
 //    QString message = "omxplayer -o hdmi "+pathToAudioProject+"/weather.mp3";
     QString tempMsg = "python "+pathToAudioProject+message.replace(" ", "%20").toLocal8Bit();
