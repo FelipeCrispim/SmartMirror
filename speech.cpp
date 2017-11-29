@@ -4,7 +4,7 @@
 #include <QTime>
 #include <QProcess>
 
-QString pathToAudioProject = "/media/smartmirror2/translate.py";
+QString pathToAudioProject = "/media/smartmirror2/translate.py ";
 
 Speech::Speech(QObject *parent) : QObject(parent)
 {
@@ -20,7 +20,7 @@ Speech::Speech(QObject *parent) : QObject(parent)
 void Speech::sayWelcome()
 {
 //    QString message = "omxplayer -o hdmi "+pathToAudioProject+"/welcome.mp3";
-    QString message = "python "+pathToAudioProject+" \"Seja%20bem%20vindo%20ao%20aisselfi\"";
+    QString message = "python "+pathToAudioProject+"\"Seja%20bem%20vindo%20ao%20aisselfi\"";
 //    QProcess process;
     m_process->start(message);
 }
@@ -31,13 +31,13 @@ void Speech::say(int hour, QString weather)
 
     if(hour < 12){
         //bom dia
-        message += " \"Olá, bom dia! ";
+        message += "\"Olá, bom dia! ";
     } else if(hour >= 12 && hour < 18) {
         //boa tarde
-        message += " \"Olá, boa tarde! ";
+        message += "\"Olá, boa tarde! ";
     } else {
         //boa noite
-        message += " \"Olá, boa noite! ";
+        message += "\"Olá, boa noite! ";
     }
 
     // https://www.wunderground.com/weather/api/d/docs?d=resources/phrase-glossary&MR=1&_ga=2.183219110.1875570343.1511699835-1348404951.1511699835
@@ -67,11 +67,11 @@ void Speech::sayGoodBye()
     qsrand(QTime::currentTime().msec());
     int randomValue = rand() % 20;
     if(randomValue <= 10) {
-        QString message = "python "+pathToAudioProject+" \"Até%20mais\"";
+        QString message = "python "+pathToAudioProject+"\"Até%20mais\"";
 //        QProcess process;
         m_process->start(message);
     } else {
-        QString message = "python "+pathToAudioProject+" \"Até%20a%20próxima\"";
+        QString message = "python "+pathToAudioProject+"\"Até%20a%20próxima\"";
 //        QProcess process;
         m_process->start(message);
     }
@@ -79,8 +79,8 @@ void Speech::sayGoodBye()
 
 void Speech::infoAboutWeather(int wind, float levelSea, QString time)
 {
-    QString message = " \"Agora em Maceió, a velocidade do vento é de "+QString::number(wind)+" km/h,"
-                        " e o nível da maré, é de "+QString::number(levelSea)+"m até às "+time+"\"";
+    QString message = "Agora em Maceió, a velocidade do vento é de "+QString::number(wind)+" km/h,"
+                        " e o nível da maré, é de "+QString::number(levelSea)+"m até às "+time+"";
 //    QProcess process;
 //    QString message = "omxplayer -o hdmi "+pathToAudioProject+"/weather.mp3";
     QString tempMsg = "python "+pathToAudioProject+message.replace(" ", "%20");
