@@ -17,6 +17,7 @@ Controller::Controller(QObject *parent) : QObject(parent)
     //    m_settings.clear();
     //    m_settings.setValue("123", "123");
 //    m_settings.setValue("gitVersion", 123);
+    system("python /media/smartmirror2/translate.py");
     if(!m_settings.contains("firstTime")){
         m_settings.setValue("firstTime", true);
 
