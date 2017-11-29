@@ -299,6 +299,7 @@ ApplicationWindow {
                 }
                 onNoPass: {
                     btTimer.start();
+
                     blockScreen.visible = true
                 }
             }
