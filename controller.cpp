@@ -17,7 +17,6 @@ Controller::Controller(QObject *parent) : QObject(parent)
     //    m_settings.clear();
     //    m_settings.setValue("123", "123");
 //    m_settings.setValue("gitVersion", 123);
-    system("python /media/smartmirror2/translate.py");
     if(!m_settings.contains("firstTime")){
         m_settings.setValue("firstTime", true);
 
@@ -30,8 +29,9 @@ Controller::Controller(QObject *parent) : QObject(parent)
 //        //in.readAll().remove("    ").split("\n").at(4);
 //        m_settings.setValue("gitVersion", in.readAll().split("\n").at(0).split(" ").at(1));
 //        system("pip install tweepy");
-        QProcess process;
-        process.start("pip install tweepy");
+//        QProcess process;
+//        process.start("pip install tweepy");
+        system("pip install tweepy");
         Speech speech;
         speech.sayWelcome();
     } else {
