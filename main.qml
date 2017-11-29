@@ -225,7 +225,7 @@ ApplicationWindow {
                                 if(root.hours < 12)
                                     speech.infoAboutWeather(root.velocityOfWind, 1.7, "11:32")
                                 else
-                                    speech.infoAboutWeather(root.velocityOfWind, 0.7, "17:43")
+                                    speech.infoAboutWeather(root.velocityOfWind, 0.8, "17:43")
                             }
                         }
                     }

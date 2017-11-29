@@ -20,7 +20,7 @@ Speech::Speech(QObject *parent) : QObject(parent)
 void Speech::sayWelcome()
 {
 //    QString message = "omxplayer -o hdmi "+pathToAudioProject+"/welcome.mp3";
-    QString message = "python "+pathToAudioProject+" \"Seja bem vindo ao aisselfi\"";
+    QString message = "python "+pathToAudioProject+" \"Seja%20bem%20vindo%20ao%20aisselfi\"";
 //    QProcess process;
     m_process->start(message);
 }
@@ -54,7 +54,7 @@ void Speech::say(int hour, QString weather)
 
 
 //        QString tempMsg = "./media/smartmirror2/speech.sh "+message;
-        QString tempMsg = "python "+pathToAudioProject+message;
+        QString tempMsg = "python "+pathToAudioProject+message.replace(" ", "%20");
 //        QProcess process;
 //        QString messages = "omxplayer -o hdmi "+pathToAudioProject+"/weather.mp3";
         m_process->start(tempMsg);
@@ -67,11 +67,11 @@ void Speech::sayGoodBye()
     qsrand(QTime::currentTime().msec());
     int randomValue = rand() % 20;
     if(randomValue <= 10) {
-        QString message = "python "+pathToAudioProject+" \"Até mais\"";
+        QString message = "python "+pathToAudioProject+" \"Até%20mais\"";
 //        QProcess process;
         m_process->start(message);
     } else {
-        QString message = "python "+pathToAudioProject+" \"Até a próxima\"";
+        QString message = "python "+pathToAudioProject+" \"Até%20a%20próxima\"";
 //        QProcess process;
         m_process->start(message);
     }
@@ -83,8 +83,9 @@ void Speech::infoAboutWeather(int wind, float levelSea, QString time)
                         " e o nível da maré, é de "+QString::number(levelSea)+"m até às "+time+"\"";
 //    QProcess process;
 //    QString message = "omxplayer -o hdmi "+pathToAudioProject+"/weather.mp3";
-    QString tempMsg = "python "+pathToAudioProject+message;
+    QString tempMsg = "python "+pathToAudioProject+message.replace(" ", "%20");
 //    QProcess process;
+    qDebug() << tempMsg;
     m_process->start(tempMsg);
 //    system(tempMsg.toLatin1());
 
